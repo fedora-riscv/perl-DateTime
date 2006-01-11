@@ -1,14 +1,14 @@
-%define DTTimeZone_version 0.37
+%define DTTimeZone_version 0.40
 %define DTLocale_version 0.22
 
 Name:           perl-DateTime
-Version:        0.2901
-Release:        2%{?dist}
+Version:        0.30
+Release:        1%{?dist}
 Summary:        DateTime Perl module
 License:        GPL or Artistic
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/DateTime/
-Source0:        http://www.cpan.org/modules/by-module/DateTime/DateTime-0.2901.tar.gz
+Source0:        http://www.cpan.org/modules/by-module/DateTime/DateTime-%{version}.tar.gz
 Source1:        http://www.cpan.org/modules/by-module/DateTime/DateTime-TimeZone-%{DTTimeZone_version}.tar.gz
 Source2:        http://www.cpan.org/modules/by-module/DateTime/DateTime-Locale-%{DTLocale_version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -125,6 +125,10 @@ rm -rf %{buildroot}
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Tue Jan 10 2006 Steven Pritchard <steve@kspei.com> 0.30-1
+- Update DateTime to 0.30
+- Update DateTime::TimeZone to 0.40
+
 * Fri Sep 16 2005 Paul Howarth <paul@city-fan.org> 0.2901-2
 - Unpack each tarball only once
 - Use Module::Build's build script where available
