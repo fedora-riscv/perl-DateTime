@@ -1,9 +1,9 @@
-%define DTTimeZone_version 0.40
+%define DTTimeZone_version 0.41
 %define DTLocale_version 0.22
 
 Name:           perl-DateTime
 Version:        0.30
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        DateTime Perl module
 License:        GPL or Artistic
 Group:          Development/Libraries
@@ -125,6 +125,9 @@ rm -rf %{buildroot}
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Sat Feb 18 2006 Steven Pritchard <steve@kspei.com> 0.30-2
+- Update DateTime::TimeZone to 0.41
+
 * Tue Jan 10 2006 Steven Pritchard <steve@kspei.com> 0.30-1
 - Update DateTime to 0.30
 - Update DateTime::TimeZone to 0.40
