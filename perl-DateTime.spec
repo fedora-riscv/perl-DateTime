@@ -1,9 +1,10 @@
-%define DTTimeZone_version 0.41
+%define DTTimeZone_version 0.42
 %define DTLocale_version 0.22
 
 Name:           perl-DateTime
 Version:        0.30
-Release:        2%{?dist}
+Release:        3%{?dist}
+Epoch:          1
 Summary:        DateTime Perl module
 License:        GPL or Artistic
 Group:          Development/Libraries
@@ -125,6 +126,10 @@ rm -rf %{buildroot}
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Mon Feb 27 2006 Steven Pritchard <steve@kspei.com> 1:0.30-3
+- Bump Epoch (argh, 0.2901 > 0.30 to rpm)
+- Update DateTime::TimeZone to 0.42
+
 * Sat Feb 18 2006 Steven Pritchard <steve@kspei.com> 0.30-2
 - Update DateTime::TimeZone to 0.41
 
