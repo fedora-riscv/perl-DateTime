@@ -3,7 +3,7 @@
 
 Name:           perl-DateTime
 Version:        0.31
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          1
 Summary:        DateTime Perl module
 License:        GPL or Artistic
@@ -19,6 +19,8 @@ BuildRequires:  perl(Class::Singleton) >= 1.03
 BuildRequires:  perl(Pod::Man) >= 1.14
 BuildRequires:  perl(File::Find::Rule)
 BuildRequires:  perl(Test::Pod)
+BuildRequires:  perl(DateTime::Format::ICal)
+BuildRequires:  perl(DateTime::Format::Strptime)
 Requires:       perl(Params::Validate) >= 0.76
 Requires:       perl(Class::Singleton) >= 1.03
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
@@ -126,6 +128,10 @@ rm -rf %{buildroot}
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Thu Jul 13 2006 Steven Pritchard <steve@kspei.com> 1:0.31-2
+- BR DateTime::Format::ICal and DateTime::Format::Strptime for better
+  test coverage.
+
 * Wed May 24 2006 Steven Pritchard <steve@kspei.com> 1:0.31-1
 - Update DateTime to 0.31.
 - Update DateTime::TimeZone to 0.46.
