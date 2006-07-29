@@ -2,16 +2,16 @@
 %define DTLocale_version 0.22
 
 Name:           perl-DateTime
-Version:        0.31
-Release:        2%{?dist}
+Version:        0.32
+Release:        1%{?dist}
 Epoch:          1
-Summary:        DateTime Perl module
+Summary:        Date and time objects
 License:        GPL or Artistic
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/DateTime/
-Source0:        http://www.cpan.org/modules/by-module/DateTime/DateTime-%{version}.tar.gz
-Source1:        http://www.cpan.org/modules/by-module/DateTime/DateTime-TimeZone-%{DTTimeZone_version}.tar.gz
-Source2:        http://www.cpan.org/modules/by-module/DateTime/DateTime-Locale-%{DTLocale_version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-%{version}.tar.gz
+Source1:        http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-TimeZone-%{DTTimeZone_version}.tar.gz
+Source2:        http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-Locale-%{DTLocale_version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  perl(Module::Build)
 BuildRequires:  perl(Params::Validate) >= 0.76
@@ -31,10 +31,11 @@ Provides:       perl(DateTimePP)
 Provides:       perl(DateTimePPExtra)
 
 %description
-The DateTime.pm module aims to provide a complete, correct, and easy to use
-date/time object implementation. Currently it handles many date
-calculations, date math (addition and subtraction), and provides convenient
-methods for retrieving portions of a date/time.
+DateTime is a class for the representation of date/time combinations, and
+is part of the Perl DateTime project. For details on this project please
+see http://datetime.perl.org/. The DateTime site has a FAQ which may help
+answer many "how do I do X?" questions. The FAQ is at
+http://datetime.perl.org/faq.html.
 
 %prep
 %setup -q -T -c -n DateTimeBundle -a 0
@@ -85,7 +86,7 @@ cd -
 
 find %{buildroot} -type f -name .packlist -exec rm -f {} \;
 find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
-find %{buildroot} -type d -depth -exec rmdir {} 2>/dev/null \;
+find %{buildroot} -depth  -type d -exec rmdir {} 2>/dev/null \;
 
 chmod -R u+rwX,go+rX,go-w %{buildroot}/*
 
@@ -128,6 +129,11 @@ rm -rf %{buildroot}
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Fri Jul 28 2006 Steven Pritchard <steve@kspei.com> 1:0.32-1
+- Update to DateTime 0.32.
+- Improve Summary, description, and source URLs.
+- Fix find option order.
+
 * Thu Jul 13 2006 Steven Pritchard <steve@kspei.com> 1:0.31-2
 - BR DateTime::Format::ICal and DateTime::Format::Strptime for better
   test coverage.
