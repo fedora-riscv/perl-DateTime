@@ -2,7 +2,7 @@
 %define DTLocale_version 0.22
 
 Name:           perl-DateTime
-Version:        0.32
+Version:        0.34
 Release:        1%{?dist}
 Epoch:          1
 Summary:        Date and time objects
@@ -129,6 +129,9 @@ rm -rf %{buildroot}
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Mon Aug 14 2006 Steven Pritchard <steve@kspei.com> 1:0.34-1
+- Update to DateTime 0.34.
+
 * Fri Jul 28 2006 Steven Pritchard <steve@kspei.com> 1:0.32-1
 - Update to DateTime 0.32.
 - Improve Summary, description, and source URLs.
