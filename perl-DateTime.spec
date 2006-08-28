@@ -1,9 +1,9 @@
-%define DTTimeZone_version 0.46
+%define DTTimeZone_version 0.47
 %define DTLocale_version 0.22
 
 Name:           perl-DateTime
 Version:        0.34
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          1
 Summary:        Date and time objects
 License:        GPL or Artistic
@@ -129,6 +129,9 @@ rm -rf %{buildroot}
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Mon Aug 28 2006 Steven Pritchard <steve@kspei.com> 1:0.34-2
+- Update to DateTime::TimeZone 0.47.
+
 * Mon Aug 14 2006 Steven Pritchard <steve@kspei.com> 1:0.34-1
 - Update to DateTime 0.34.
 
