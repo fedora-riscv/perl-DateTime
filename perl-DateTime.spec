@@ -1,9 +1,9 @@
-%define DTTimeZone_version 0.48
-%define DTLocale_version 0.22
+%define DTTimeZone_version 0.54
+%define DTLocale_version 0.3101
 
 Name:           perl-DateTime
-Version:        0.34
-Release:        3%{?dist}
+Version:        0.35
+Release:        1%{?dist}
 Epoch:          1
 Summary:        Date and time objects
 License:        GPL or Artistic
@@ -12,6 +12,7 @@ URL:            http://search.cpan.org/dist/DateTime/
 Source0:        http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-%{version}.tar.gz
 Source1:        http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-TimeZone-%{DTTimeZone_version}.tar.gz
 Source2:        http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-Locale-%{DTLocale_version}.tar.gz
+Patch0:         DateTime-LeapSecond-utf8.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  perl(Module::Build)
 BuildRequires:  perl(Params::Validate) >= 0.76
@@ -41,6 +42,10 @@ http://datetime.perl.org/faq.html.
 %setup -q -T -c -n DateTimeBundle -a 0
 %setup -q -T -D -n DateTimeBundle -a 1
 %setup -q -T -D -n DateTimeBundle -a 2
+
+cd DateTime-%{version}
+%patch0 -p1
+cd -
 
 cat > filter-provides.sh << EOF
 #!/bin/sh
@@ -88,12 +93,12 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} \;
 find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 find %{buildroot} -depth  -type d -exec rmdir {} 2>/dev/null \;
 
-chmod -R u+rwX,go+rX,go-w %{buildroot}/*
+%{_fixperms} %{buildroot}/*
 
 # Move documentation into bundle area
 mkdir DT::Locale DT::TimeZone
 mv DateTime-%{version}/{CREDITS,Changes,LICENSE,README,TODO} .
-mv DateTime-Locale-%{DTLocale_version}/{Changes,LICENSE.icu} DT::Locale
+mv DateTime-Locale-%{DTLocale_version}/{Changes,LICENSE.cldr} DT::Locale
 mv DateTime-TimeZone-%{DTTimeZone_version}/{Changes,README} DT::TimeZone
 
 %check
@@ -129,6 +134,14 @@ rm -rf %{buildroot}
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Fri Nov 03 2006 Steven Pritchard <steve@kspei.com> 1:0.35-1
+- Update to DateTime 0.35.
+- Update to DateTime::Locale 0.3101.
+- LICENSE.icu seems to have been renamed LICENSE.cldr.
+- Update to DateTime::TimeZone 0.54.
+- Use fixperms macro instead of our own chmod incantation.
+- Convert DateTime::LeapSecond to UTF-8 to avoid a rpmlint warning.
+
 * Tue Aug 29 2006 Steven Pritchard <steve@kspei.com> 1:0.34-3
 - Update to DateTime::TimeZone 0.48.
 
