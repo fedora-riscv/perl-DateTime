@@ -3,7 +3,7 @@
 
 Name:           perl-DateTime
 Version:        0.37
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          1
 Summary:        Date and time objects
 License:        GPL or Artistic
@@ -31,6 +31,14 @@ Provides:       perl(DateTime::TimeZoneCatalog)
 Provides:       perl(DateTimePP)
 Provides:       perl(DateTimePPExtra)
 
+Source98:       DateTime-filter-requires.sh
+%global real_perl_requires %{__perl_requires}
+%define __perl_requires %{_tmppath}/%{name}-%{version}-%{release}-%(%{__id_u} -n)-filter-requires
+
+Source99:       DateTime-filter-provides.sh
+%global real_perl_provides %{__perl_provides}
+%define __perl_provides %{_tmppath}/%{name}-%{version}-%{release}-%(%{__id_u} -n)-filter-provides
+
 %description
 DateTime is a class for the representation of date/time combinations, and
 is part of the Perl DateTime project. For details on this project please
@@ -47,13 +55,11 @@ cd DateTime-%{version}
 %patch0 -p1
 cd -
 
-cat > filter-provides.sh << EOF
-#!/bin/sh
-# Remove redundant unversioned provides of perl(DateTime) and perl(DateTime::TimeZone)
-exec %{__perl_provides} $* | egrep -v '^perl[(]DateTime(::TimeZone)?[)]$'
-EOF
-%define __perl_provides %{_builddir}/DateTimeBundle/filter-provides.sh
-chmod 755 filter-provides.sh
+sed -e 's,@@PERL_REQ@@,%{real_perl_requires},' %{SOURCE98} > %{__perl_requires}
+chmod +x %{__perl_requires}
+
+sed -e 's,@@PERL_PROV@@,%{real_perl_provides},' %{SOURCE99} > %{__perl_provides}
+chmod +x %{__perl_provides}
 
 %build
 cd DateTime-Locale-%{DTLocale_version}
@@ -70,30 +76,30 @@ cd DateTime-%{version}
 PERLLIB=../DateTime-Locale-%{DTLocale_version}/blib/lib
 PERLLIB=$PERLLIB:../DateTime-TimeZone-%{DTTimeZone_version}/blib/lib
 export PERLLIB
-%{__perl} Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
+%{__perl} Makefile.PL INSTALLDIRS=vendor OPTIMIZE="$RPM_OPT_FLAGS"
 make %{?_smp_mflags}
 cd -
 
 %install
-rm -rf %{buildroot}
+rm -rf $RPM_BUILD_ROOT
 
 cd DateTime-Locale-%{DTLocale_version}
-./Build install destdir=%{buildroot}
+./Build install destdir=$RPM_BUILD_ROOT
 cd -
 
 cd DateTime-TimeZone-%{DTTimeZone_version}
-./Build install destdir=%{buildroot}
+./Build install destdir=$RPM_BUILD_ROOT
 cd -
 
 cd DateTime-%{version}
-make pure_install PERL_INSTALL_ROOT=%{buildroot}
+make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
 cd -
 
-find %{buildroot} -type f -name .packlist -exec rm -f {} \;
-find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
-find %{buildroot} -depth  -type d -exec rmdir {} 2>/dev/null \;
+find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
+find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
+find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
-%{_fixperms} %{buildroot}/*
+%{_fixperms} $RPM_BUILD_ROOT/*
 
 # Move documentation into bundle area
 mkdir DT::Locale DT::TimeZone
@@ -120,7 +126,7 @@ cd -
 make -C DateTime-%{version} test
 
 %clean
-rm -rf %{buildroot}
+rm -rf $RPM_BUILD_ROOT %{__perl_requires} %{__perl_provides}
 
 %files
 %defattr(-,root,root,0755)
@@ -134,6 +140,11 @@ rm -rf %{buildroot}
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Mon Apr 02 2007 Steven Pritchard <steve@kspei.com> 1:0.37-2
+- Filter Win32::TieRegistry dependency.
+- Do the provides filter like we do in cpanspec.
+- Drop some macro usage.
+
 * Sat Mar 31 2007 Steven Pritchard <steve@kspei.com> 1:0.37-1
 - Update to DateTime 0.37.
 - Update to DateTime::TimeZone 0.63.
