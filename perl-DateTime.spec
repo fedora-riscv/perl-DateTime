@@ -3,7 +3,7 @@
 
 Name:           perl-DateTime
 Version:        0.37
-Release:        2%{?dist}
+Release:        3%{?dist}
 Epoch:          1
 Summary:        Date and time objects
 License:        GPL or Artistic
@@ -20,8 +20,8 @@ BuildRequires:  perl(Class::Singleton) >= 1.03
 BuildRequires:  perl(Pod::Man) >= 1.14
 BuildRequires:  perl(File::Find::Rule)
 BuildRequires:  perl(Test::Pod)
-BuildRequires:  perl(DateTime::Format::ICal)
-BuildRequires:  perl(DateTime::Format::Strptime)
+#BuildRequires:  perl(DateTime::Format::ICal)
+#BuildRequires:  perl(DateTime::Format::Strptime)
 Requires:       perl(Params::Validate) >= 0.76
 Requires:       perl(Class::Singleton) >= 1.03
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
@@ -140,6 +140,9 @@ rm -rf $RPM_BUILD_ROOT %{__perl_requires} %{__perl_provides}
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Mon Apr 02 2007 Steven Pritchard <steve@kspei.com> 1:0.37-3
+- Drop BR DateTime::Format::* to avoid circular build deps.
+
 * Mon Apr 02 2007 Steven Pritchard <steve@kspei.com> 1:0.37-2
 - Filter Win32::TieRegistry dependency.
 - Do the provides filter like we do in cpanspec.
