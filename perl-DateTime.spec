@@ -1,9 +1,9 @@
-%define DTTimeZone_version 0.63
+%define DTTimeZone_version 0.6602
 %define DTLocale_version 0.34
 
 Name:           perl-DateTime
-Version:        0.37
-Release:        3%{?dist}
+Version:        0.38
+Release:        1%{?dist}
 Epoch:          1
 Summary:        Date and time objects
 License:        GPL or Artistic
@@ -14,16 +14,17 @@ Source1:        http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-TimeZone-%{
 Source2:        http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-Locale-%{DTLocale_version}.tar.gz
 Patch0:         DateTime-LeapSecond-utf8.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+BuildRequires:  perl(Class::Singleton) >= 1.03
+BuildRequires:  perl(File::Find::Rule)
 BuildRequires:  perl(Module::Build)
 BuildRequires:  perl(Params::Validate) >= 0.76
-BuildRequires:  perl(Class::Singleton) >= 1.03
 BuildRequires:  perl(Pod::Man) >= 1.14
-BuildRequires:  perl(File::Find::Rule)
 BuildRequires:  perl(Test::Pod)
+BuildRequires:  perl(Test::Pod::Coverage) >= 1.08
 #BuildRequires:  perl(DateTime::Format::ICal)
 #BuildRequires:  perl(DateTime::Format::Strptime)
-Requires:       perl(Params::Validate) >= 0.76
 Requires:       perl(Class::Singleton) >= 1.03
+Requires:       perl(Params::Validate) >= 0.76
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 Provides:       perl-DateTime-TimeZone = %{DTTimeZone_version}
 Provides:       perl-DateTime-Locale = %{DTLocale_version}
@@ -140,6 +141,11 @@ rm -rf $RPM_BUILD_ROOT %{__perl_requires} %{__perl_provides}
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Mon Jul 02 2007 Steven Pritchard <steve@kspei.com> 1:0.38-1
+- Update to DateTime 0.38.
+- Update to DateTime::TimeZone 0.6602.
+- BR Test::Pod::Coverage.
+
 * Mon Apr 02 2007 Steven Pritchard <steve@kspei.com> 1:0.37-3
 - Drop BR DateTime::Format::* to avoid circular build deps.
 
