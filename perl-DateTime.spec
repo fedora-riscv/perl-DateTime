@@ -3,7 +3,7 @@
 
 Name:           perl-DateTime
 Version:        0.38
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          1
 Summary:        Date and time objects
 License:        GPL or Artistic
@@ -19,6 +19,7 @@ BuildRequires:  perl(File::Find::Rule)
 BuildRequires:  perl(Module::Build)
 BuildRequires:  perl(Params::Validate) >= 0.76
 BuildRequires:  perl(Pod::Man) >= 1.14
+BuildRequires:  perl(Test::Output)
 BuildRequires:  perl(Test::Pod)
 BuildRequires:  perl(Test::Pod::Coverage) >= 1.08
 #BuildRequires:  perl(DateTime::Format::ICal)
@@ -141,6 +142,9 @@ rm -rf $RPM_BUILD_ROOT %{__perl_requires} %{__perl_provides}
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Thu Jul 05 2007 Steven Pritchard <steve@kspei.com> 1:0.38-2
+- BR Test::Output.
+
 * Mon Jul 02 2007 Steven Pritchard <steve@kspei.com> 1:0.38-1
 - Update to DateTime 0.38.
 - Update to DateTime::TimeZone 0.6602.
