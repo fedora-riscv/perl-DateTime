@@ -1,9 +1,9 @@
-%define DTTimeZone_version 0.6602
+%define DTTimeZone_version 0.6603
 %define DTLocale_version 0.34
 
 Name:           perl-DateTime
-Version:        0.38
-Release:        2%{?dist}
+Version:        0.39
+Release:        1%{?dist}
 Epoch:          1
 Summary:        Date and time objects
 License:        GPL or Artistic
@@ -22,6 +22,7 @@ BuildRequires:  perl(Pod::Man) >= 1.14
 BuildRequires:  perl(Test::Output)
 BuildRequires:  perl(Test::Pod)
 BuildRequires:  perl(Test::Pod::Coverage) >= 1.08
+# Creates a build dependency loop.
 #BuildRequires:  perl(DateTime::Format::ICal)
 #BuildRequires:  perl(DateTime::Format::Strptime)
 Requires:       perl(Class::Singleton) >= 1.03
@@ -142,6 +143,10 @@ rm -rf $RPM_BUILD_ROOT %{__perl_requires} %{__perl_provides}
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Sun Jul 22 2007 Steven Pritchard <steve@kspei.com> 1:0.39-1
+- Update to DateTIme 0.39.
+- Update to DateTime::TimeZone 0.6603.
+
 * Thu Jul 05 2007 Steven Pritchard <steve@kspei.com> 1:0.38-2
 - BR Test::Output.
 
