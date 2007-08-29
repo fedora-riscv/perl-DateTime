@@ -3,7 +3,7 @@
 
 Name:           perl-DateTime
 Version:        0.39
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          1
 Summary:        Date and time objects
 License:        GPL or Artistic
@@ -143,6 +143,9 @@ rm -rf $RPM_BUILD_ROOT %{__perl_requires} %{__perl_provides}
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Wed Aug 29 2007 Fedora Release Engineering <rel-eng at fedoraproject dot org> - 1:0.39-2
+- Rebuild for selinux ppc32 issue.
+
 * Sun Jul 22 2007 Steven Pritchard <steve@kspei.com> 1:0.39-1
 - Update to DateTIme 0.39.
 - Update to DateTime::TimeZone 0.6603.
