@@ -1,9 +1,9 @@
-%define DTTimeZone_version 0.6603
-%define DTLocale_version 0.34
+%define DTTimeZone_version 0.67
+%define DTLocale_version 0.35
 
 Name:           perl-DateTime
-Version:        0.39
-Release:        2%{?dist}
+Version:        0.41
+Release:        1%{?dist}
 Epoch:          1
 Summary:        Date and time objects
 License:        GPL or Artistic
@@ -143,11 +143,16 @@ rm -rf $RPM_BUILD_ROOT %{__perl_requires} %{__perl_provides}
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Mon Sep 17 2007 Steven Pritchard <steve@kspei.com> 1:0.41-1
+- Update to DateTime 0.41.
+- Update to DateTime::Locale 0.35.
+- Update to DateTime::TimeZone 0.67.
+
 * Wed Aug 29 2007 Fedora Release Engineering <rel-eng at fedoraproject dot org> - 1:0.39-2
 - Rebuild for selinux ppc32 issue.
 
 * Sun Jul 22 2007 Steven Pritchard <steve@kspei.com> 1:0.39-1
-- Update to DateTIme 0.39.
+- Update to DateTime 0.39.
 - Update to DateTime::TimeZone 0.6603.
 
 * Thu Jul 05 2007 Steven Pritchard <steve@kspei.com> 1:0.38-2
