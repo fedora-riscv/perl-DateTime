@@ -1,12 +1,12 @@
-%define DTTimeZone_version 0.67
+%define DTTimeZone_version 0.70
 %define DTLocale_version 0.35
 
 Name:           perl-DateTime
 Version:        0.41
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          1
 Summary:        Date and time objects
-License:        GPL or Artistic
+License:        GPL+ or Artistic
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/DateTime/
 Source0:        http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-%{version}.tar.gz
@@ -143,6 +143,10 @@ rm -rf $RPM_BUILD_ROOT %{__perl_requires} %{__perl_provides}
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Tue Dec 11 2007 Steven Pritchard <steve@kspei.com> 1:0.41-2
+- Update License tag.
+- Update to DateTime::TimeZone 0.70.
+
 * Mon Sep 17 2007 Steven Pritchard <steve@kspei.com> 1:0.41-1
 - Update to DateTime 0.41.
 - Update to DateTime::Locale 0.35.
