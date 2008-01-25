@@ -3,7 +3,7 @@
 
 Name:           perl-DateTime
 Version:        0.41
-Release:        2%{?dist}
+Release:        3%{?dist}
 Epoch:          1
 Summary:        Date and time objects
 License:        GPL+ or Artistic
@@ -143,6 +143,9 @@ rm -rf $RPM_BUILD_ROOT %{__perl_requires} %{__perl_provides}
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Thu Jan 24 2008 Tom "spot" Callaway <tcallawa@redhat.com> 1:0.41-3
+- rebuild for new perl
+
 * Tue Dec 11 2007 Steven Pritchard <steve@kspei.com> 1:0.41-2
 - Update License tag.
 - Update to DateTime::TimeZone 0.70.
