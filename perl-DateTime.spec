@@ -3,7 +3,7 @@
 
 Name:           perl-DateTime
 Version:        0.41
-Release:        3%{?dist}
+Release:        4%{?dist}
 Epoch:          1
 Summary:        Date and time objects
 License:        GPL+ or Artistic
@@ -143,6 +143,9 @@ rm -rf $RPM_BUILD_ROOT %{__perl_requires} %{__perl_provides}
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Tue Feb 19 2008 Fedora Release Engineering <rel-eng@fedoraproject.org> - 1:0.41-4
+- Autorebuild for GCC 4.3
+
 * Thu Jan 24 2008 Tom "spot" Callaway <tcallawa@redhat.com> 1:0.41-3
 - rebuild for new perl
 
