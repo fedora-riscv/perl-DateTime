@@ -1,9 +1,9 @@
-%define DTTimeZone_version 0.70
+%define DTTimeZone_version 0.75
 %define DTLocale_version 0.35
 
 Name:           perl-DateTime
-Version:        0.41
-Release:        5%{?dist}
+Version:        0.42
+Release:        1%{?dist}
 Epoch:          1
 Summary:        Date and time objects
 License:        GPL+ or Artistic
@@ -47,7 +47,7 @@ DateTime is a class for the representation of date/time combinations, and
 is part of the Perl DateTime project. For details on this project please
 see http://datetime.perl.org/. The DateTime site has a FAQ which may help
 answer many "how do I do X?" questions. The FAQ is at
-http://datetime.perl.org/faq.html.
+http://datetime.perl.org/?FAQ.
 
 %prep
 %setup -q -T -c -n DateTimeBundle -a 0
@@ -143,6 +143,11 @@ rm -rf $RPM_BUILD_ROOT %{__perl_requires} %{__perl_provides}
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Thu May 15 2008 Steven Pritchard <steve@kspei.com> 1:0.42-1
+- Update to DateTime 0.42.
+- Update to DateTime::TimeZone 0.75.
+- Update FAQ URL in description.
+
 * Wed Feb 27 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 1:0.41-5
 - Rebuild for perl 5.10 (again)
 
