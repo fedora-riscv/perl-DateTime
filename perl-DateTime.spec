@@ -1,8 +1,8 @@
-%define DTTimeZone_version 0.75
-%define DTLocale_version 0.35
+%define DTTimeZone_version 0.77
+%define DTLocale_version 0.4001
 
 Name:           perl-DateTime
-Version:        0.42
+Version:        0.4302
 Release:        1%{?dist}
 Epoch:          1
 Summary:        Date and time objects
@@ -16,6 +16,7 @@ Patch0:         DateTime-LeapSecond-utf8.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  perl(Class::Singleton) >= 1.03
 BuildRequires:  perl(File::Find::Rule)
+BuildRequires:  perl(List::MoreUtils)
 BuildRequires:  perl(Module::Build)
 BuildRequires:  perl(Params::Validate) >= 0.76
 BuildRequires:  perl(Pod::Man) >= 1.14
@@ -118,6 +119,10 @@ PERL5LIB=$PERL5LIB:$(pwd)/DateTime-Locale-%{DTLocale_version}/blib/lib
 PERL5LIB=$PERL5LIB:$(pwd)/DateTime-TimeZone-%{DTTimeZone_version}/blib/lib
 export PERL5LIB
 
+# Run pod-related tests.
+IS_MAINTAINER=1
+export IS_MAINTAINER
+
 cd DateTime-Locale-%{DTLocale_version}
 ./Build test
 cd -
@@ -143,6 +148,13 @@ rm -rf $RPM_BUILD_ROOT %{__perl_requires} %{__perl_provides}
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Sat May 31 2008 Steven Pritchard <steve@kspei.com> 1:0.4302-1
+- Update to DateTime 0.4302.
+- Update to DateTime::TimeZone 0.77.
+- Update to DateTime::Locale 0.4001.
+- BR List::MoreUtils.
+- Define IS_MAINTAINER so we run the pod tests.
+
 * Thu May 15 2008 Steven Pritchard <steve@kspei.com> 1:0.42-1
 - Update to DateTime 0.42.
 - Update to DateTime::TimeZone 0.75.
