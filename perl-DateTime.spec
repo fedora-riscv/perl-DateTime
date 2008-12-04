@@ -1,9 +1,9 @@
-%define DTTimeZone_version 0.70
-%define DTLocale_version 0.35
+%define DTTimeZone_version 0.7904
+%define DTLocale_version 0.41
 
 Name:           perl-DateTime
-Version:        0.41
-Release:        5%{?dist}
+Version:        0.4304
+Release:        2%{?dist}
 Epoch:          1
 Summary:        Date and time objects
 License:        GPL+ or Artistic
@@ -16,6 +16,7 @@ Patch0:         DateTime-LeapSecond-utf8.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  perl(Class::Singleton) >= 1.03
 BuildRequires:  perl(File::Find::Rule)
+BuildRequires:  perl(List::MoreUtils)
 BuildRequires:  perl(Module::Build)
 BuildRequires:  perl(Params::Validate) >= 0.76
 BuildRequires:  perl(Pod::Man) >= 1.14
@@ -47,7 +48,7 @@ DateTime is a class for the representation of date/time combinations, and
 is part of the Perl DateTime project. For details on this project please
 see http://datetime.perl.org/. The DateTime site has a FAQ which may help
 answer many "how do I do X?" questions. The FAQ is at
-http://datetime.perl.org/faq.html.
+http://datetime.perl.org/?FAQ.
 
 %prep
 %setup -q -T -c -n DateTimeBundle -a 0
@@ -118,6 +119,10 @@ PERL5LIB=$PERL5LIB:$(pwd)/DateTime-Locale-%{DTLocale_version}/blib/lib
 PERL5LIB=$PERL5LIB:$(pwd)/DateTime-TimeZone-%{DTTimeZone_version}/blib/lib
 export PERL5LIB
 
+# Run pod-related tests.
+IS_MAINTAINER=1
+export IS_MAINTAINER
+
 cd DateTime-Locale-%{DTLocale_version}
 ./Build test
 cd -
@@ -143,6 +148,29 @@ rm -rf $RPM_BUILD_ROOT %{__perl_requires} %{__perl_provides}
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Mon Sep 08 2008 Steven Pritchard <steve@kspei.com> 1:0.4304-2
+- Update to DateTime::TimeZone 0.7904.
+
+* Tue Jul 15 2008 Steven Pritchard <steve@kspei.com> 1:0.4304-1
+- Update to DateTime 0.4304.
+- Update to DateTime::TimeZone 0.78.
+- Update to DateTime::Locale 0.41.
+
+* Tue Jul 08 2008 Steven Pritchard <steve@kspei.com> 1:0.4302-2
+- Update to DateTime::TimeZone 0.7701.
+
+* Sat May 31 2008 Steven Pritchard <steve@kspei.com> 1:0.4302-1
+- Update to DateTime 0.4302.
+- Update to DateTime::TimeZone 0.77.
+- Update to DateTime::Locale 0.4001.
+- BR List::MoreUtils.
+- Define IS_MAINTAINER so we run the pod tests.
+
+* Thu May 15 2008 Steven Pritchard <steve@kspei.com> 1:0.42-1
+- Update to DateTime 0.42.
+- Update to DateTime::TimeZone 0.75.
+- Update FAQ URL in description.
+
 * Wed Feb 27 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 1:0.41-5
 - Rebuild for perl 5.10 (again)
 
