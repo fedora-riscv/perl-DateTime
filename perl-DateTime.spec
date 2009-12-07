@@ -3,7 +3,7 @@
 
 Name:           perl-DateTime
 Version:        0.4501
-Release:        3%{?dist}
+Release:        4%{?dist}
 Epoch:          1
 Summary:        Date and time objects
 License:        GPL+ or Artistic
@@ -148,6 +148,9 @@ rm -rf $RPM_BUILD_ROOT %{__perl_requires} %{__perl_provides}
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Mon Dec  7 2009 Stepan Kasal <skasal@redhat.com> - 1:0.4501-4
+- rebuild against perl 5.10.1
+
 * Sat Jul 25 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:0.4501-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
 
