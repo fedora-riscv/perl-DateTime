@@ -1,47 +1,49 @@
-%define DTLocale_version 0.42
-%define DTTimeZone_version 0.8301
+%define DT_version 0.53
+%define DTLocale_version 0.44
+%define DTTimeZone_version 1.08
 
 Name:           perl-DateTime
-Version:        0.4501
-Release:        4%{?dist}
+# must now be 0.xx00 to preserve upgrade path:
+Version:        %{DT_version}00
+Release:        1%{?dist}
 Epoch:          1
 Summary:        Date and time objects
 License:        GPL+ or Artistic
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/DateTime/
-Source0:        http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-%{DT_version}.tar.gz
 Source1:        http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-TimeZone-%{DTTimeZone_version}.tar.gz
 Source2:        http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-Locale-%{DTLocale_version}.tar.gz
-Patch0:         DateTime-LeapSecond-utf8.patch
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+BuildRoot:      %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
+BuildRequires:  perl(Class::ISA)
 BuildRequires:  perl(Class::Singleton) >= 1.03
+BuildRequires:  perl(ExtUtils::CBuilder)
 BuildRequires:  perl(File::Find::Rule)
 BuildRequires:  perl(List::MoreUtils)
-BuildRequires:  perl(Module::Build)
-BuildRequires:  perl(Params::Validate) >= 0.76
+BuildRequires:  perl(Module::Build) >= 0.35
+# or better:
+#BuildRequires:  perl(Module::Build) >= 0.36
+BuildRequires:  perl(Params::Validate) >= 0.91
 BuildRequires:  perl(Pod::Man) >= 1.14
+BuildRequires:  perl(Test::Exception)
+BuildRequires:  perl(Test::More) >= 0.34
 BuildRequires:  perl(Test::Output)
-BuildRequires:  perl(Test::Pod)
+BuildRequires:  perl(Test::Pod) >= 1.14
 BuildRequires:  perl(Test::Pod::Coverage) >= 1.08
-# Creates a build dependency loop.
-#BuildRequires:  perl(DateTime::Format::ICal)
-#BuildRequires:  perl(DateTime::Format::Strptime)
 Requires:       perl(Class::Singleton) >= 1.03
-Requires:       perl(Params::Validate) >= 0.76
+Requires:       perl(Params::Validate) >= 0.91
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 Provides:       perl-DateTime-TimeZone = %{DTTimeZone_version}
 Provides:       perl-DateTime-Locale = %{DTLocale_version}
-Provides:       perl(DateTime::TimeZoneCatalog)
 Provides:       perl(DateTimePP)
 Provides:       perl(DateTimePPExtra)
 
-Source98:       DateTime-filter-requires.sh
-%global real_perl_requires %{__perl_requires}
-%define __perl_requires %{_tmppath}/%{name}-%{version}-%{release}-%(%{__id_u} -n)-filter-requires
-
-Source99:       DateTime-filter-provides.sh
-%global real_perl_provides %{__perl_provides}
-%define __perl_provides %{_tmppath}/%{name}-%{version}-%{release}-%(%{__id_u} -n)-filter-provides
+%{?filter_setup:
+%filter_from_requires /^perl(Win32/d
+# drop the unversioned provide:
+%filter_from_provides /^perl(DateTime)$/d
+%?perl_default_filter
+}
 
 %description
 DateTime is a class for the representation of date/time combinations, and
@@ -55,15 +57,10 @@ http://datetime.perl.org/?FAQ.
 %setup -q -T -D -n DateTimeBundle -a 1
 %setup -q -T -D -n DateTimeBundle -a 2
 
-cd DateTime-%{version}
-%patch0 -p1
-cd -
-
-sed -e 's,@@PERL_REQ@@,%{real_perl_requires},' %{SOURCE98} > %{__perl_requires}
-chmod +x %{__perl_requires}
-
-sed -e 's,@@PERL_PROV@@,%{real_perl_provides},' %{SOURCE99} > %{__perl_provides}
-chmod +x %{__perl_provides}
+(
+f=DateTime-%{DT_version}/lib/DateTime/LeapSecond.pm
+iconv -f iso-8859-1 -t utf-8 $f > $f.utf8 && mv $f.utf8 $f
+)
 
 %build
 cd DateTime-Locale-%{DTLocale_version}
@@ -76,45 +73,41 @@ cd DateTime-TimeZone-%{DTTimeZone_version}
 ./Build
 cd -
 
-cd DateTime-%{version}
+cd DateTime-%{DT_version}
 PERLLIB=../DateTime-Locale-%{DTLocale_version}/blib/lib
 PERLLIB=$PERLLIB:../DateTime-TimeZone-%{DTTimeZone_version}/blib/lib
 export PERLLIB
-%{__perl} Makefile.PL INSTALLDIRS=vendor OPTIMIZE="$RPM_OPT_FLAGS"
-make %{?_smp_mflags}
+%{__perl} Build.PL installdirs=vendor optimize="$RPM_OPT_FLAGS"
+./Build
 cd -
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-cd DateTime-Locale-%{DTLocale_version}
-./Build install destdir=$RPM_BUILD_ROOT
-cd -
+for d in DateTime-Locale-%{DTLocale_version} \
+	 DateTime-TimeZone-%{DTTimeZone_version} \
+	 DateTime-%{DT_version}; do
+  cd $d
+  ./Build install destdir=$RPM_BUILD_ROOT create_packlist=0
+  cd -
+done
 
-cd DateTime-TimeZone-%{DTTimeZone_version}
-./Build install destdir=$RPM_BUILD_ROOT
-cd -
-
-cd DateTime-%{version}
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
-cd -
-
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
+find $RPM_BUILD_ROOT -depth -type d -empty -exec rmdir {} \;
 
 %{_fixperms} $RPM_BUILD_ROOT/*
 
+
 # Move documentation into bundle area
 mkdir DT::Locale DT::TimeZone
-mv DateTime-%{version}/{CREDITS,Changes,LICENSE,README,TODO} .
+mv DateTime-%{DT_version}/{CREDITS,Changes,LICENSE,README,TODO} .
 mv DateTime-Locale-%{DTLocale_version}/{Changes,LICENSE.cldr} DT::Locale
 mv DateTime-TimeZone-%{DTTimeZone_version}/{Changes,README} DT::TimeZone
 
 %check
 # Have to use PERL5LIB rather than PERLLIB here because the test scripts
 # clobber PERLLIB
-PERL5LIB=$(pwd)/DateTime-%{version}/blib/arch:$(pwd)/DateTime-%{version}/blib/lib
+PERL5LIB=$(pwd)/DateTime-%{DT_version}/blib/arch:$(pwd)/DateTime-%{DT_version}/blib/lib
 PERL5LIB=$PERL5LIB:$(pwd)/DateTime-Locale-%{DTLocale_version}/blib/lib
 PERL5LIB=$PERL5LIB:$(pwd)/DateTime-TimeZone-%{DTTimeZone_version}/blib/lib
 export PERL5LIB
@@ -123,18 +116,16 @@ export PERL5LIB
 IS_MAINTAINER=1
 export IS_MAINTAINER
 
-cd DateTime-Locale-%{DTLocale_version}
-./Build test
-cd -
-
-cd DateTime-TimeZone-%{DTTimeZone_version}
-./Build test
-cd -
-
-make -C DateTime-%{version} test
+for d in DateTime-Locale-%{DTLocale_version} \
+	 DateTime-TimeZone-%{DTTimeZone_version} \
+	 DateTime-%{DT_version}; do
+  cd $d
+  ./Build test
+  cd -
+done
 
 %clean
-rm -rf $RPM_BUILD_ROOT %{__perl_requires} %{__perl_provides}
+rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,0755)
@@ -148,6 +139,14 @@ rm -rf $RPM_BUILD_ROOT %{__perl_requires} %{__perl_provides}
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Fri Jan 15 2010 Stepan Kasal <skasal@redhat.com> - 1:0.5300-1
+- new upstream version
+- use Build.PL as Makefile.PL no longer exists
+- use iconv to recode to utf-8, not a patch
+- update BuildRequires
+- drop Provides: perl(DateTime::TimeZoneCatalog), it is no longer there
+- use filtering macros
+
 * Mon Dec  7 2009 Stepan Kasal <skasal@redhat.com> - 1:0.4501-4
 - rebuild against perl 5.10.1
 
