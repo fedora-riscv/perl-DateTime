@@ -1,11 +1,11 @@
 %define DT_version 0.53
 %define DTLocale_version 0.44
-%define DTTimeZone_version 1.08
+%define DTTimeZone_version 1.10
 
 Name:           perl-DateTime
 # must now be 0.xx00 to preserve upgrade path:
 Version:        %{DT_version}00
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          1
 Summary:        Date and time objects
 License:        GPL+ or Artistic
@@ -139,6 +139,9 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Wed Jan 27 2010 Stepan Kasal <skasal@redhat.com> - 1:0.5300-2
+- new upstream version of DateTime-TimeZone
+
 * Fri Jan 15 2010 Stepan Kasal <skasal@redhat.com> - 1:0.5300-1
 - new upstream version
 - use Build.PL as Makefile.PL no longer exists
