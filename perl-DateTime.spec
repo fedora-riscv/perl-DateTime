@@ -5,7 +5,7 @@
 Name:           perl-DateTime
 # must now be 0.xx00 to preserve upgrade path:
 Version:        %{DT_version}00
-Release:        2%{?dist}
+Release:        3%{?dist}
 Epoch:          1
 Summary:        Date and time objects
 License:        GPL+ or Artistic
@@ -139,6 +139,9 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Fri Apr 30 2010 Marcela Maslanova <mmaslano@redhat.com> - 1:0.5300-3
+- Mass rebuild with perl-5.12.0
+
 * Wed Jan 27 2010 Stepan Kasal <skasal@redhat.com> - 1:0.5300-2
 - new upstream version of DateTime-TimeZone
 
