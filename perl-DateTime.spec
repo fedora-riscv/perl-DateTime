@@ -1,11 +1,11 @@
 %define DT_version 0.53
-%define DTLocale_version 0.44
+%define DTLocale_version 0.45
 %define DTTimeZone_version 1.10
 
 Name:           perl-DateTime
 # must now be 0.xx00 to preserve upgrade path:
 Version:        %{DT_version}00
-Release:        3%{?dist}
+Release:        4%{?dist}
 Epoch:          1
 Summary:        Date and time objects
 License:        GPL+ or Artistic
@@ -139,6 +139,9 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Mon Jun 14 2010 Petr Sabata <psabata@redhat.com> - 1:0.5300-4
+- perl-DateTime-Locale-0.45 update
+
 * Fri Apr 30 2010 Marcela Maslanova <mmaslano@redhat.com> - 1:0.5300-3
 - Mass rebuild with perl-5.12.0
 
