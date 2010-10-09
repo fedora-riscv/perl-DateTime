@@ -1,14 +1,14 @@
-%define DT_version 0.53
+%define DT_version 0.63
 %define DTLocale_version 0.45
-%define DTTimeZone_version 1.10
+%define DTTimeZone_version 1.22
 
 Name:           perl-DateTime
 # must now be 0.xx00 to preserve upgrade path:
 Version:        %{DT_version}00
-Release:        4%{?dist}
+Release:        1%{?dist}
 Epoch:          1
 Summary:        Date and time objects
-License:        GPL+ or Artistic
+License:        Artistic 2.0 and (GPL+ or Artistic)
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/DateTime/
 Source0:        http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-%{DT_version}.tar.gz
@@ -58,8 +58,12 @@ http://datetime.perl.org/?FAQ.
 %setup -q -T -D -n DateTimeBundle -a 2
 
 (
-f=DateTime-%{DT_version}/lib/DateTime/LeapSecond.pm
+for f in \
+  DateTime-%{DT_version}/lib/DateTime/LeapSecond.pm \
+  DateTime-Locale-%{DTLocale_version}/Changes
+do
 iconv -f iso-8859-1 -t utf-8 $f > $f.utf8 && mv $f.utf8 $f
+done
 )
 
 %build
@@ -139,6 +143,12 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Sat Oct 09 2010 Iain Arnell <iarnell@gmail.com> 1:0.6300-1
+- Update DateTime to 0.63
+- Update DateTime::TimeZone to 1.22
+- DateTime license changed from "GPL+ or Artistic" to "Artistic 2.0"
+- Fix DTLocale/Changelog encoding
+
 * Mon Jun 14 2010 Petr Sabata <psabata@redhat.com> - 1:0.5300-4
 - perl-DateTime-Locale-0.45 update
 
