@@ -1,6 +1,6 @@
-%define DT_version 0.63
+%define DT_version 0.66
 %define DTLocale_version 0.45
-%define DTTimeZone_version 1.22
+%define DTTimeZone_version 1.26
 
 Name:           perl-DateTime
 # must now be 0.xx00 to preserve upgrade path:
@@ -16,6 +16,7 @@ Source1:        http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-TimeZone-%{
 Source2:        http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-Locale-%{DTLocale_version}.tar.gz
 BuildRoot:      %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 BuildRequires:  perl(Class::ISA)
+BuildRequires:  perl(Class::Load)
 BuildRequires:  perl(Class::Singleton) >= 1.03
 BuildRequires:  perl(ExtUtils::CBuilder)
 BuildRequires:  perl(File::Find::Rule)
@@ -30,6 +31,7 @@ BuildRequires:  perl(Test::More) >= 0.34
 BuildRequires:  perl(Test::Output)
 BuildRequires:  perl(Test::Pod) >= 1.14
 BuildRequires:  perl(Test::Pod::Coverage) >= 1.08
+BuildRequires:  perl(parent)
 Requires:       perl(Class::Singleton) >= 1.03
 Requires:       perl(Params::Validate) >= 0.91
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
@@ -50,7 +52,7 @@ DateTime is a class for the representation of date/time combinations, and
 is part of the Perl DateTime project. For details on this project please
 see http://datetime.perl.org/. The DateTime site has a FAQ which may help
 answer many "how do I do X?" questions. The FAQ is at
-http://datetime.perl.org/?FAQ.
+http://datetime.perl.org/wiki/datetime/page/FAQ
 
 %prep
 %setup -q -T -c -n DateTimeBundle -a 0
@@ -143,6 +145,12 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Sun Dec 12 2010 Steven Pritchard <steve@kspei.com> 1:0.6600-1
+- Update DateTime to 0.66.
+- Update DateTime::TimeZone to 1.26.
+- Update URL for FAQ in description.
+- BR Class::Load and parent.
+
 * Sat Oct 09 2010 Iain Arnell <iarnell@gmail.com> 1:0.6300-1
 - Update DateTime to 0.63
 - Update DateTime::TimeZone to 1.22
