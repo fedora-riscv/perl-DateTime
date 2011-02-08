@@ -5,7 +5,7 @@
 Name:           perl-DateTime
 # must now be 0.xx00 to preserve upgrade path:
 Version:        %{DT_version}00
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          1
 Summary:        Date and time objects
 License:        Artistic 2.0 and (GPL+ or Artistic)
@@ -145,6 +145,9 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Tue Feb 08 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:0.6600-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
+
 * Sun Dec 12 2010 Steven Pritchard <steve@kspei.com> 1:0.6600-1
 - Update DateTime to 0.66.
 - Update DateTime::TimeZone to 1.26.
