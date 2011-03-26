@@ -101,6 +101,7 @@ make pure_install DESTDIR=%{buildroot}
 cd -
 
 find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
+find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 find $RPM_BUILD_ROOT -depth -type d -empty -exec rmdir {} \;
 
 %{_fixperms} $RPM_BUILD_ROOT/*
@@ -153,6 +154,7 @@ rm -rf $RPM_BUILD_ROOT
 - update DateTime::TimeZone to 1.31
 - DateTime::TimeZone no longer has Build.PL; use Makefile.PL
 - whitespace cleanup
+- clean up .packlist
 
 * Tue Feb 08 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:0.6600-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
