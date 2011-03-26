@@ -1,11 +1,11 @@
 %define DT_version 0.66
 %define DTLocale_version 0.45
-%define DTTimeZone_version 1.26
+%define DTTimeZone_version 1.31
 
 Name:           perl-DateTime
 # must now be 0.xx00 to preserve upgrade path:
 Version:        %{DT_version}00
-Release:        2%{?dist}
+Release:        3%{?dist}
 Epoch:          1
 Summary:        Date and time objects
 License:        Artistic 2.0 and (GPL+ or Artistic)
@@ -75,8 +75,8 @@ cd DateTime-Locale-%{DTLocale_version}
 cd -
 
 cd DateTime-TimeZone-%{DTTimeZone_version}
-%{__perl} Build.PL installdirs=vendor
-./Build
+%{__perl} Makefile.PL installdirs=vendor
+make %{?_smp_mflags}
 cd -
 
 cd DateTime-%{DT_version}
@@ -91,12 +91,14 @@ cd -
 rm -rf $RPM_BUILD_ROOT
 
 for d in DateTime-Locale-%{DTLocale_version} \
-	 DateTime-TimeZone-%{DTTimeZone_version} \
-	 DateTime-%{DT_version}; do
+         DateTime-%{DT_version}; do
   cd $d
   ./Build install destdir=$RPM_BUILD_ROOT create_packlist=0
   cd -
 done
+cd DateTime-TimeZone-%{DTTimeZone_version}
+make pure_install DESTDIR=%{buildroot}
+cd -
 
 find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
 find $RPM_BUILD_ROOT -depth -type d -empty -exec rmdir {} \;
@@ -123,11 +125,13 @@ IS_MAINTAINER=1
 export IS_MAINTAINER
 
 for d in DateTime-Locale-%{DTLocale_version} \
-	 DateTime-TimeZone-%{DTTimeZone_version} \
-	 DateTime-%{DT_version}; do
+         DateTime-%{DT_version}; do
   cd $d
   ./Build test
   cd -
+cd DateTime-TimeZone-%{DTTimeZone_version}
+make test
+cd -
 done
 
 %clean
@@ -145,6 +149,11 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Sat Mar 26 2011 Iain Arnell <iarnell@gmail.com> 1:0.6600-3
+- update DateTime::TimeZone to 1.31
+- DateTime::TimeZone no longer has Build.PL; use Makefile.PL
+- whitespace cleanup
+
 * Tue Feb 08 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:0.6600-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
 
