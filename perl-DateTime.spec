@@ -1,11 +1,11 @@
 %define DT_version 0.53
 %define DTLocale_version 0.44
-%define DTTimeZone_version 1.10
+%define DTTimeZone_version 1.33
 
 Name:           perl-DateTime
 # must now be 0.xx00 to preserve upgrade path:
 Version:        %{DT_version}00
-Release:        2%{?dist}
+Release:        3%{?dist}
 Epoch:          1
 Summary:        Date and time objects
 License:        GPL+ or Artistic
@@ -16,6 +16,7 @@ Source1:        http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-TimeZone-%{
 Source2:        http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-Locale-%{DTLocale_version}.tar.gz
 BuildRoot:      %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 BuildRequires:  perl(Class::ISA)
+BuildRequires:  perl(Class::Load)
 BuildRequires:  perl(Class::Singleton) >= 1.03
 BuildRequires:  perl(ExtUtils::CBuilder)
 BuildRequires:  perl(File::Find::Rule)
@@ -30,6 +31,7 @@ BuildRequires:  perl(Test::More) >= 0.34
 BuildRequires:  perl(Test::Output)
 BuildRequires:  perl(Test::Pod) >= 1.14
 BuildRequires:  perl(Test::Pod::Coverage) >= 1.08
+BuildRequires:  perl(parent)
 Requires:       perl(Class::Singleton) >= 1.03
 Requires:       perl(Params::Validate) >= 0.91
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
@@ -50,7 +52,7 @@ DateTime is a class for the representation of date/time combinations, and
 is part of the Perl DateTime project. For details on this project please
 see http://datetime.perl.org/. The DateTime site has a FAQ which may help
 answer many "how do I do X?" questions. The FAQ is at
-http://datetime.perl.org/?FAQ.
+http://datetime.perl.org/wiki/datetime/page/FAQ
 
 %prep
 %setup -q -T -c -n DateTimeBundle -a 0
@@ -58,8 +60,12 @@ http://datetime.perl.org/?FAQ.
 %setup -q -T -D -n DateTimeBundle -a 2
 
 (
-f=DateTime-%{DT_version}/lib/DateTime/LeapSecond.pm
+for f in \
+  DateTime-%{DT_version}/lib/DateTime/LeapSecond.pm \
+  DateTime-Locale-%{DTLocale_version}/Changes
+do
 iconv -f iso-8859-1 -t utf-8 $f > $f.utf8 && mv $f.utf8 $f
+done
 )
 
 %build
@@ -69,8 +75,8 @@ cd DateTime-Locale-%{DTLocale_version}
 cd -
 
 cd DateTime-TimeZone-%{DTTimeZone_version}
-%{__perl} Build.PL installdirs=vendor
-./Build
+%{__perl} Makefile.PL installdirs=vendor
+make %{?_smp_mflags}
 cd -
 
 cd DateTime-%{DT_version}
@@ -85,14 +91,17 @@ cd -
 rm -rf $RPM_BUILD_ROOT
 
 for d in DateTime-Locale-%{DTLocale_version} \
-	 DateTime-TimeZone-%{DTTimeZone_version} \
-	 DateTime-%{DT_version}; do
+         DateTime-%{DT_version}; do
   cd $d
   ./Build install destdir=$RPM_BUILD_ROOT create_packlist=0
   cd -
 done
+cd DateTime-TimeZone-%{DTTimeZone_version}
+make pure_install DESTDIR=%{buildroot}
+cd -
 
 find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
+find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 find $RPM_BUILD_ROOT -depth -type d -empty -exec rmdir {} \;
 
 %{_fixperms} $RPM_BUILD_ROOT/*
@@ -117,12 +126,14 @@ IS_MAINTAINER=1
 export IS_MAINTAINER
 
 for d in DateTime-Locale-%{DTLocale_version} \
-	 DateTime-TimeZone-%{DTTimeZone_version} \
-	 DateTime-%{DT_version}; do
+         DateTime-%{DT_version}; do
   cd $d
   ./Build test
   cd -
 done
+cd DateTime-TimeZone-%{DTTimeZone_version}
+make test
+cd -
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -139,6 +150,9 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Sun Apr 24 2011 Iain Arnell <iarnell@gmail.com> 1:0.5300-3
+- update DateTime::TimeZone to 1.33 (Olson 2011f)
+
 * Wed Jan 27 2010 Stepan Kasal <skasal@redhat.com> - 1:0.5300-2
 - new upstream version of DateTime-TimeZone
 
