@@ -5,7 +5,7 @@
 Name:           perl-DateTime
 # must now be 0.xx00 to preserve upgrade path:
 Version:        %{DT_version}00
-Release:        5%{?dist}
+Release:        6%{?dist}
 Epoch:          1
 Summary:        Date and time objects
 License:        Artistic 2.0 and (GPL+ or Artistic)
@@ -130,10 +130,10 @@ for d in DateTime-Locale-%{DTLocale_version} \
   cd $d
   ./Build test
   cd -
+done
 cd DateTime-TimeZone-%{DTTimeZone_version}
 make test
 cd -
-done
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -150,6 +150,9 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Sun Apr 24 2011 Iain Arnell <iarnell@gmail.com> 1:0.6600-6
+- fix the testing for loop
+
 * Sun Apr 24 2011 Iain Arnell <iarnell@gmail.com> 1:0.6600-5
 - update DateTime::TimeZone to 1.33 (Olson 2011f)
 
