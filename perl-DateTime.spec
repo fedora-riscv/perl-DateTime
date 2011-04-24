@@ -5,7 +5,7 @@
 Name:           perl-DateTime
 # must now be 0.xx00 to preserve upgrade path:
 Version:        %{DT_version}00
-Release:        4%{?dist}
+Release:        5%{?dist}
 Epoch:          1
 Summary:        Date and time objects
 License:        Artistic 2.0 and (GPL+ or Artistic)
@@ -150,7 +150,7 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
-* Sun Apr 24 2011 Iain Arnell <iarnell@gmail.com> 1:0.6600-4
+* Sun Apr 24 2011 Iain Arnell <iarnell@gmail.com> 1:0.6600-5
 - update DateTime::TimeZone to 1.33 (Olson 2011f)
 
 * Wed Apr 06 2011 Iain Arnell <iarnell@gmail.com> 1:0.6600-4
