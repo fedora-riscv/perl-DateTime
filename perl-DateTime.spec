@@ -1,11 +1,11 @@
-%define DT_version 0.66
+%define DT_version 0.69
 %define DTLocale_version 0.45
 %define DTTimeZone_version 1.33
 
 Name:           perl-DateTime
 # must now be 0.xx00 to preserve upgrade path:
 Version:        %{DT_version}00
-Release:        6%{?dist}
+Release:        1%{?dist}
 Epoch:          1
 Summary:        Date and time objects
 License:        Artistic 2.0 and (GPL+ or Artistic)
@@ -21,6 +21,7 @@ BuildRequires:  perl(Class::Singleton) >= 1.03
 BuildRequires:  perl(ExtUtils::CBuilder)
 BuildRequires:  perl(File::Find::Rule)
 BuildRequires:  perl(List::MoreUtils)
+BuildRequires:  perl(Math::Round)
 BuildRequires:  perl(Module::Build) >= 0.35
 # or better:
 #BuildRequires:  perl(Module::Build) >= 0.36
@@ -150,6 +151,9 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Wed May 04 2011 Iain Arnell <iarnell@gmail.com> 1:0.6900-1
+- update DateTime to 0.69
+
 * Sun Apr 24 2011 Iain Arnell <iarnell@gmail.com> 1:0.6600-6
 - fix the testing for loop
 
