@@ -1,11 +1,11 @@
 %define DT_version 0.53
 %define DTLocale_version 0.44
-%define DTTimeZone_version 1.33
+%define DTTimeZone_version 1.34
 
 Name:           perl-DateTime
 # must now be 0.xx00 to preserve upgrade path:
 Version:        %{DT_version}00
-Release:        3%{?dist}
+Release:        4%{?dist}
 Epoch:          1
 Summary:        Date and time objects
 License:        GPL+ or Artistic
@@ -150,6 +150,9 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Wed May 04 2011 Iain Arnell <iarnell@gmail.com> 1:0.5300-4
+- update DateTime::TimeZone to 1.34 (Olson 2011g)
+
 * Sun Apr 24 2011 Iain Arnell <iarnell@gmail.com> 1:0.5300-3
 - update DateTime::TimeZone to 1.33 (Olson 2011f)
 
