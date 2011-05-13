@@ -1,4 +1,4 @@
-%define DT_version 0.69
+%define DT_version 0.70
 %define DTLocale_version 0.45
 %define DTTimeZone_version 1.34
 
@@ -18,7 +18,6 @@ BuildRoot:      %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 BuildRequires:  perl(Class::ISA)
 BuildRequires:  perl(Class::Load)
 BuildRequires:  perl(Class::Singleton) >= 1.03
-BuildRequires:  perl(ExtUtils::CBuilder)
 BuildRequires:  perl(File::Find::Rule)
 BuildRequires:  perl(List::MoreUtils)
 BuildRequires:  perl(Math::Round)
@@ -151,6 +150,9 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Fri May 13 2011 Iain Arnell <iarnell@gmail.com> 1:0.7000-1
+- update DateTime to 0.70
+
 * Wed May 04 2011 Iain Arnell <iarnell@gmail.com> 1:0.6900-1
 - update DateTime to 0.69
 - update DateTime::TimeZone to 1.34 (Olson 2011g)
