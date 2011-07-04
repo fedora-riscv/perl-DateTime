@@ -47,6 +47,9 @@ Provides:       perl(DateTimePPExtra)
 %?perl_default_filter
 }
 
+%global __provides_exclude %{?__provides_exclude:%__provides_exclude|}^perl\\(DateTime\\)$
+%global __requires_exclude %{?__requires_exclude:%__requires_exclude|}^perl\\(Win32
+
 %description
 DateTime is a class for the representation of date/time combinations, and
 is part of the Perl DateTime project. For details on this project please
@@ -152,6 +155,7 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Mon Jul 04 2011 Iain Arnell <iarnell@gmail.com> 1:0.7000-2
 - update DateTime::TimeZone to 1.35 (Olson 2011h)
+- add rpm 4.9 filtering macros
 
 * Fri May 13 2011 Iain Arnell <iarnell@gmail.com> 1:0.7000-1
 - update DateTime to 0.70
