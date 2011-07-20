@@ -5,7 +5,7 @@
 Name:           perl-DateTime
 # must now be 0.xx00 to preserve upgrade path:
 Version:        %{DT_version}00
-Release:        2%{?dist}
+Release:        3%{?dist}
 Epoch:          1
 Summary:        Date and time objects
 License:        Artistic 2.0 and (GPL+ or Artistic)
@@ -153,6 +153,9 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_vendorarch}/DateTime*.pm
 
 %changelog
+* Wed Jul 20 2011 Petr Sabata <contyk@redhat.com> - 1:0.7000-3
+- Perl mass rebuild
+
 * Mon Jul 04 2011 Iain Arnell <iarnell@gmail.com> 1:0.7000-2
 - update DateTime::TimeZone to 1.35 (Olson 2011h)
 - add rpm 4.9 filtering macros
