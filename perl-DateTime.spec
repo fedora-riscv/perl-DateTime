@@ -1,7 +1,7 @@
 Name:           perl-DateTime
 Epoch:          2
 Version:        0.70
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Date and time object
 License:        Artistic 2.0
 Group:          Development/Libraries
@@ -9,6 +9,8 @@ URL:            http://search.cpan.org/dist/DateTime/
 Source0:        http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-%{version}.tar.gz
 # circular dependency - only used for one test
 #BuildRequires:  perl(DateTime::Format::Strptime) >= 1.2000
+BuildRequires:  perl(base)
+BuildRequires:  perl(constant)
 BuildRequires:  perl(DateTime::Locale) >= 0.41
 BuildRequires:  perl(DateTime::TimeZone) >= 1.09
 BuildRequires:  perl(Math::Round)
@@ -18,8 +20,10 @@ BuildRequires:  perl(Scalar::Util)
 BuildRequires:  perl(Test::Exception)
 BuildRequires:  perl(Test::More) >= 0.88
 BuildRequires:  perl(Time::Local) >= 1.04
+BuildRequires:  perl(XSLoader)
 Requires:       perl(DateTime::Locale) >= 0.41
 Requires:       perl(DateTime::TimeZone) >= 1.09
+Requires:       perl(XSLoader)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
 # not automatically detected
@@ -60,6 +64,9 @@ RELEASE_TESTING=1 ./Build test
 %{_mandir}/man3/*
 
 %changelog
+* Thu Aug 18 2011 Iain Arnell <iarnell@gmail.com> 2:0.70-2
+- Additional (Build)Requires from unofficial review
+
 * Mon Aug 15 2011 Iain Arnell <iarnell@gmail.com> 2:0.70-1
 - Unbundle DateTime::TimeZone and DateTime::Locale
 - Bump epoch and revert to upstream versioning
