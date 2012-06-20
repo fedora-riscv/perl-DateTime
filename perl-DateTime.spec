@@ -1,7 +1,7 @@
 Name:           perl-DateTime
 Epoch:          2
 Version:        0.70
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Date and time object
 License:        Artistic 2.0
 Group:          Development/Libraries
@@ -64,6 +64,9 @@ RELEASE_TESTING=1 ./Build test
 %{_mandir}/man3/*
 
 %changelog
+* Wed Jun 20 2012 Petr Pisar <ppisar@redhat.com> - 2:0.70-4
+- Perl 5.16 rebuild
+
 * Fri Jan 13 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2:0.70-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
 
