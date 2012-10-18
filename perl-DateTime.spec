@@ -1,36 +1,39 @@
 Name:           perl-DateTime
 Epoch:          2
-Version:        0.70
-Release:        5%{?dist}
+Version:        0.77
+Release:        1%{?dist}
 Summary:        Date and time object
 License:        Artistic 2.0
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/DateTime/
 Source0:        http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-%{version}.tar.gz
-# circular dependency - only used for one test
-#BuildRequires:  perl(DateTime::Format::Strptime) >= 1.2000
+BuildRequires:  perl(Module::Build)
+# Run-time:
 BuildRequires:  perl(base)
+BuildRequires:  perl(Carp)
 BuildRequires:  perl(constant)
 BuildRequires:  perl(DateTime::Locale) >= 0.41
 BuildRequires:  perl(DateTime::TimeZone) >= 1.09
 BuildRequires:  perl(Math::Round)
-BuildRequires:  perl(Module::Build)
 BuildRequires:  perl(Params::Validate) >= 0.76
 BuildRequires:  perl(Scalar::Util)
-BuildRequires:  perl(Test::Exception)
-BuildRequires:  perl(Test::More) >= 0.88
-BuildRequires:  perl(Time::Local) >= 1.04
 BuildRequires:  perl(XSLoader)
-Requires:       perl(DateTime::Locale) >= 0.41
-Requires:       perl(DateTime::TimeZone) >= 1.09
-Requires:       perl(XSLoader)
+# Tests:
+BuildRequires:  perl(Test::More) >= 0.88
+# Optional tests:
+# circular dependency - perl(DateTime::Format::Strptime) >= 1.2000
+BuildRequires:  perl(Storable)
+BuildRequires:  perl(Test::Fatal)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
+Requires:       perl(XSLoader)
 
 # not automatically detected
 Provides:       perl(DateTimePP) = %{version}
 Provides:       perl(DateTimePPExtra) = %{version}
 
 %{?perl_default_filter}
+# Filter under-specified dependencies
+%global __requires_exclude %{?__requires_exclude:%__requires_exclude|}^perl\\((DateTime::TimeZone|Params::Validate)\\)$
 
 %description
 DateTime is a class for the representation of date/time combinations.  It
@@ -50,12 +53,10 @@ believed to be the birth of Jesus Christ.
 %install
 ./Build install destdir=%{buildroot} create_packlist=0
 find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
-
 %{_fixperms} %{buildroot}/*
 
 %check
-RELEASE_TESTING=1 ./Build test
+./Build test
 
 %files
 %doc Changes CREDITS LICENSE README TODO
@@ -64,6 +65,9 @@ RELEASE_TESTING=1 ./Build test
 %{_mandir}/man3/*
 
 %changelog
+* Thu Oct 18 2012 Petr Pisar <ppisar@redhat.com> - 2:0.77-1
+- 0.77 bump
+
 * Fri Jul 20 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2:0.70-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
 
