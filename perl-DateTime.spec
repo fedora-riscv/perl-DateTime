@@ -1,7 +1,7 @@
 Name:           perl-DateTime
-Epoch:          2
-Version:        0.77
-Release:        1%{?dist}
+Epoch:          0
+Version:        0.78
+Release:        2%{?dist}
 Summary:        Date and time object
 License:        Artistic 2.0
 Group:          Development/Libraries
@@ -14,7 +14,6 @@ BuildRequires:  perl(Carp)
 BuildRequires:  perl(constant)
 BuildRequires:  perl(DateTime::Locale) >= 0.41
 BuildRequires:  perl(DateTime::TimeZone) >= 1.09
-BuildRequires:  perl(Math::Round)
 BuildRequires:  perl(Params::Validate) >= 0.76
 BuildRequires:  perl(Scalar::Util)
 BuildRequires:  perl(XSLoader)
@@ -65,6 +64,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{_mandir}/man3/*
 
 %changelog
+* Mon Nov 19 2012 Petr Pisar <ppisar@redhat.com> - 0:0.78-2
+- 0.78 bump
+
 * Thu Oct 18 2012 Petr Pisar <ppisar@redhat.com> - 2:0.77-1
 - 0.77 bump
 
