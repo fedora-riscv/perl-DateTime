@@ -1,7 +1,7 @@
 Name:           perl-DateTime
 Epoch:          2
 Version:        0.78
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Date and time object
 License:        Artistic 2.0
 Group:          Development/Libraries
@@ -64,6 +64,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{_mandir}/man3/*
 
 %changelog
+* Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2:0.78-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
+
 * Mon Nov 19 2012 Petr Pisar <ppisar@redhat.com> - 2:0.78-1
 - 0.78 bump
 
