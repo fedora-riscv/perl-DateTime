@@ -1,28 +1,37 @@
 Name:           perl-DateTime
 Epoch:          2
-Version:        0.78
+Version:        1.01
 Release:        1%{?dist}
 Summary:        Date and time object
 License:        Artistic 2.0
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/DateTime/
 Source0:        http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-%{version}.tar.gz
+BuildRequires:  perl
 BuildRequires:  perl(Module::Build)
+BuildRequires:  perl(strict)
+BuildRequires:  perl(warnings)
 # Run-time:
 BuildRequires:  perl(base)
 BuildRequires:  perl(Carp)
 BuildRequires:  perl(constant)
 BuildRequires:  perl(DateTime::Locale) >= 0.41
 BuildRequires:  perl(DateTime::TimeZone) >= 1.09
+BuildRequires:  perl(integer)
+BuildRequires:  perl(overload)
 BuildRequires:  perl(Params::Validate) >= 0.76
+BuildRequires:  perl(POSIX)
 BuildRequires:  perl(Scalar::Util)
+BuildRequires:  perl(Try::Tiny)
+BuildRequires:  perl(vars)
 BuildRequires:  perl(XSLoader)
 # Tests:
+BuildRequires:  perl(Test::Fatal)
 BuildRequires:  perl(Test::More) >= 0.88
+BuildRequires:  perl(utf8)
 # Optional tests:
 # circular dependency - perl(DateTime::Format::Strptime) >= 1.2000
 BuildRequires:  perl(Storable)
-BuildRequires:  perl(Test::Fatal)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 Requires:       perl(XSLoader)
 
@@ -64,11 +73,23 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{_mandir}/man3/*
 
 %changelog
+* Tue Apr 02 2013 Petr Šabata <contyk@redhat.com> - 2:1.01-1
+- 1.01 bump
+
+* Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2:0.78-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
+
 * Mon Nov 19 2012 Petr Pisar <ppisar@redhat.com> - 2:0.78-1
 - 0.78 bump
 
 * Thu Oct 18 2012 Petr Pisar <ppisar@redhat.com> - 2:0.77-1
 - 0.77 bump
+
+* Fri Jul 20 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2:0.70-5
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
+
+* Wed Jun 20 2012 Petr Pisar <ppisar@redhat.com> - 2:0.70-4
+- Perl 5.16 rebuild
 
 * Fri Jan 13 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2:0.70-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
