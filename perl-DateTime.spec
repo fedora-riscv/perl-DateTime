@@ -1,7 +1,7 @@
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.03
-Release:        3%{?dist}
+Version:        1.04
+Release:        1%{?dist}
 Summary:        Date and time object
 License:        Artistic 2.0
 Group:          Development/Libraries
@@ -26,6 +26,8 @@ BuildRequires:  perl(Try::Tiny)
 BuildRequires:  perl(vars)
 BuildRequires:  perl(XSLoader)
 # Tests:
+# Cwd not used
+# Test::DependentModules not used
 BuildRequires:  perl(Test::Fatal)
 BuildRequires:  perl(Test::More) >= 0.88
 BuildRequires:  perl(utf8)
@@ -41,7 +43,7 @@ Provides:       perl(DateTimePPExtra) = %{version}
 
 %{?perl_default_filter}
 # Filter under-specified dependencies
-%global __requires_exclude %{?__requires_exclude:%__requires_exclude|}^perl\\((DateTime::TimeZone|Params::Validate)\\)$
+%global __requires_exclude %{?__requires_exclude:%__requires_exclude|}^perl\\((DateTime::Locale|DateTime::TimeZone|Params::Validate)\\)$
 
 %description
 DateTime is a class for the representation of date/time combinations.  It
@@ -73,6 +75,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{_mandir}/man3/*
 
 %changelog
+* Tue Dec 10 2013 Petr Pisar <ppisar@redhat.com> - 2:1.04-1
+- 1.04 bump
+
 * Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2:1.03-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
