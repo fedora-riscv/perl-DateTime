@@ -1,6 +1,6 @@
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.04
+Version:        1.06
 Release:        1%{?dist}
 Summary:        Date and time object
 License:        Artistic 2.0
@@ -75,6 +75,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{_mandir}/man3/*
 
 %changelog
+* Fri Jan 03 2014 Petr Pisar <ppisar@redhat.com> - 2:1.06-1
+- 1.06 bump
+
 * Tue Dec 10 2013 Petr Pisar <ppisar@redhat.com> - 2:1.04-1
 - 1.04 bump
 
