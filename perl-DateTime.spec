@@ -1,6 +1,6 @@
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.06
+Version:        1.07
 Release:        1%{?dist}
 Summary:        Date and time object
 License:        Artistic 2.0
@@ -34,7 +34,7 @@ BuildRequires:  perl(utf8)
 # Optional tests:
 # circular dependency - perl(DateTime::Format::Strptime) >= 1.2000
 BuildRequires:  perl(Storable)
-Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
+Requires:       perl(:MODULE_COMPAT_%(eval "`perl -V:version`"; echo $version))
 Requires:       perl(XSLoader)
 
 # not automatically detected
@@ -57,13 +57,13 @@ believed to be the birth of Jesus Christ.
 %setup -q -n DateTime-%{version}
 
 %build
-%{__perl} Build.PL installdirs=vendor optimize="%{optflags}"
+perl Build.PL installdirs=vendor optimize="%{optflags}"
 ./Build
 
 %install
 ./Build install destdir=%{buildroot} create_packlist=0
 find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
-%{_fixperms} %{buildroot}/*
+%{_fixperms} %{buildroot}
 
 %check
 ./Build test
@@ -75,6 +75,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{_mandir}/man3/*
 
 %changelog
+* Mon Feb 10 2014 Paul Howarth <paul@city-fan.org> - 2:1.07-1
+- 1.07 bump
+
 * Fri Jan 03 2014 Petr Pisar <ppisar@redhat.com> - 2:1.06-1
 - 1.06 bump
 
