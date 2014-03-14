@@ -1,6 +1,6 @@
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.07
+Version:        1.08
 Release:        1%{?dist}
 Summary:        Date and time object
 License:        Artistic 2.0
@@ -75,6 +75,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{_mandir}/man3/*
 
 %changelog
+* Fri Mar 14 2014 Paul Howarth <paul@city-fan.org> - 2:1.08-1
+- 1.08 bump
+
 * Mon Feb 10 2014 Paul Howarth <paul@city-fan.org> - 2:1.07-1
 - 1.07 bump
 
