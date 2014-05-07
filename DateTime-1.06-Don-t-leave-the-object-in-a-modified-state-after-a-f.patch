@@ -1,0 +1,96 @@
+From d744bf17b7a0e0158eb813a8605cc0d8635f8959 Mon Sep 17 00:00:00 2001
+From: Dave Rolsky <autarch@urth.org>
+Date: Sat, 3 May 2014 11:39:47 +0800
+Subject: [PATCH] Don't leave the object in a modified state after a failed
+ truncate( to => 'week' )
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Petr Pisar: Ported to 1.06.
+
+Signed-off-by: Petr Písař <ppisar@redhat.com>
+---
+ lib/DateTime.pm | 11 ++++++++++-
+ t/16truncate.t  | 38 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 48 insertions(+), 1 deletion(-)
+
+diff --git a/lib/DateTime.pm b/lib/DateTime.pm
+index 1ff4c2e..a8663b2 100644
+--- a/lib/DateTime.pm
++++ b/lib/DateTime.pm
+@@ -1985,7 +1985,16 @@ sub set_formatter {
+                 $self->add( days => -1 * $day_diff );
+             }
+ 
+-            return $self->truncate( to => 'day' );
++            # This can fail if the truncate ends up giving us an invalid local
++            # date time. If that happens we need to reverse the addition we
++            # just did. See https://rt.cpan.org/Ticket/Display.html?id=93347.
++            try {
++                $self->truncate( to => 'day' );
++            }
++            catch {
++                $self->add( days => $day_diff );
++                die $_;
++            };
+         }
+         else {
+             my $truncate;
+diff --git a/t/16truncate.t b/t/16truncate.t
+index 0058f50..a478760 100644
+--- a/t/16truncate.t
++++ b/t/16truncate.t
+@@ -5,6 +5,7 @@ use Test::Fatal;
+ use Test::More 0.88;
+ 
+ use DateTime;
++use Try::Tiny;
+ 
+ my %vals = (
+     year       => 50,
+@@ -233,4 +234,41 @@ my %vals = (
+     }
+ }
+ 
++{
++    my $dt = DateTime->new(
++        year      => 2010,
++        month     => 3,
++        day       => 25,
++        hour      => 1,
++        minute    => 5,
++        time_zone => 'Asia/Tehran',
++    );
++
++    is(
++        $dt->day_of_week(),
++        4,
++        'day of week is Thursday'
++    );
++
++    my $error;
++    try {
++        $dt->truncate( to => 'week' );
++    }
++    catch {
++        $error = $_;
++    };
++
++    like(
++        $error,
++        qr/Invalid local time for date/,
++        'truncate operation threw an error because of an invalid local datetime'
++    );
++
++    is(
++        $dt->day_of_week(),
++        4,
++        'day of week does not change after failed truncate() call'
++    );
++}
++
+ done_testing();
+-- 
+1.9.0
+

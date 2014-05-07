@@ -1,12 +1,15 @@
 Name:           perl-DateTime
 Epoch:          2
 Version:        1.06
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Date and time object
 License:        Artistic 2.0
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/DateTime/
 Source0:        http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-%{version}.tar.gz
+# Restore object after failed truncate() call, bug #1095104, CPAN RT#93347,
+# in 1.09
+Patch0:         DateTime-1.06-Don-t-leave-the-object-in-a-modified-state-after-a-f.patch
 BuildRequires:  perl
 BuildRequires:  perl(Module::Build)
 BuildRequires:  perl(strict)
@@ -55,6 +58,7 @@ believed to be the birth of Jesus Christ.
 
 %prep
 %setup -q -n DateTime-%{version}
+%patch0 -p1
 
 %build
 %{__perl} Build.PL installdirs=vendor optimize="%{optflags}"
@@ -75,6 +79,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{_mandir}/man3/*
 
 %changelog
+* Wed May 07 2014 Petr Pisar <ppisar@redhat.com> - 2:1.06-2
+- Restore object after failed truncate() call (bug #1095104)
+
 * Fri Jan 03 2014 Petr Pisar <ppisar@redhat.com> - 2:1.06-1
 - 1.06 bump
 
