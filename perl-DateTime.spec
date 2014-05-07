@@ -1,6 +1,6 @@
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.08
+Version:        1.10
 Release:        1%{?dist}
 Summary:        Date and time object
 License:        Artistic 2.0
@@ -24,12 +24,14 @@ BuildRequires:  perl(POSIX)
 BuildRequires:  perl(Scalar::Util)
 BuildRequires:  perl(Try::Tiny)
 BuildRequires:  perl(vars)
+BuildRequires:  perl(warnings::register)
 BuildRequires:  perl(XSLoader)
 # Tests:
 # Cwd not used
 # Test::DependentModules not used
 BuildRequires:  perl(Test::Fatal)
 BuildRequires:  perl(Test::More) >= 0.88
+BuildRequires:  perl(Test::Warnings) >= 0.005
 BuildRequires:  perl(utf8)
 # Optional tests:
 # circular dependency - perl(DateTime::Format::Strptime) >= 1.2000
@@ -75,6 +77,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{_mandir}/man3/*
 
 %changelog
+* Wed May 07 2014 Petr Pisar <ppisar@redhat.com> - 2:1.10-1
+- 1.10 bump
+
 * Fri Mar 14 2014 Paul Howarth <paul@city-fan.org> - 2:1.08-1
 - 1.08 bump
 
