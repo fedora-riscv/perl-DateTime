@@ -1,7 +1,7 @@
 Name:           perl-DateTime
 Epoch:          2
 Version:        1.10
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Date and time object
 License:        Artistic 2.0
 Group:          Development/Libraries
@@ -77,6 +77,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{_mandir}/man3/*
 
 %changelog
+* Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2:1.10-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
 * Wed May 07 2014 Petr Pisar <ppisar@redhat.com> - 2:1.10-1
 - 1.10 bump
 
