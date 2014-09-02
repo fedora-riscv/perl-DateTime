@@ -1,8 +1,8 @@
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.10
-Release:        4%{?dist}
-Summary:        Date and time object
+Version:        1.12
+Release:        1%{?dist}
+Summary:        Date and time object for Perl
 License:        Artistic 2.0
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/DateTime/
@@ -16,7 +16,7 @@ BuildRequires:  perl(base)
 BuildRequires:  perl(Carp)
 BuildRequires:  perl(constant)
 BuildRequires:  perl(DateTime::Locale) >= 0.41
-BuildRequires:  perl(DateTime::TimeZone) >= 1.09
+BuildRequires:  perl(DateTime::TimeZone) >= 1.74
 BuildRequires:  perl(integer)
 BuildRequires:  perl(overload)
 BuildRequires:  perl(Params::Validate) >= 0.76
@@ -29,13 +29,22 @@ BuildRequires:  perl(XSLoader)
 # Tests:
 # Cwd not used
 # Test::DependentModules not used
+BuildRequires:  perl(ExtUtils::MakeMaker)
+BuildRequires:  perl(File::Spec)
 BuildRequires:  perl(Test::Fatal)
 BuildRequires:  perl(Test::More) >= 0.88
 BuildRequires:  perl(Test::Warnings) >= 0.005
 BuildRequires:  perl(utf8)
 # Optional tests:
 # circular dependency - perl(DateTime::Format::Strptime) >= 1.2000
+# Pod::Coverage::TrustPod not used
+# Pod::Wordlist not used
 BuildRequires:  perl(Storable)
+# Test::DependentModules not used
+# Test::NoTabs not used
+# Test::Pod 1.41 not used
+# Test::Pod::Coverage 1.08 not used
+# Test::Spelling 0.12 not used
 Requires:       perl(:MODULE_COMPAT_%(eval "`perl -V:version`"; echo $version))
 Requires:       perl(XSLoader)
 
@@ -71,12 +80,15 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 ./Build test
 
 %files
-%doc Changes CREDITS LICENSE README TODO
+%doc Changes CREDITS LICENSE README.md TODO
 %{perl_vendorarch}/auto/*
 %{perl_vendorarch}/DateTime*
 %{_mandir}/man3/*
 
 %changelog
+* Tue Sep 02 2014 Petr Pisar <ppisar@redhat.com> - 2:1.12-1
+- 1.12 bump
+
 * Fri Aug 29 2014 Jitka Plesnikova <jplesnik@redhat.com> - 2:1.10-4
 - Perl 5.20 rebuild
 
