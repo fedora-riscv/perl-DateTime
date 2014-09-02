@@ -1,7 +1,7 @@
 Name:           perl-DateTime
 Epoch:          2
 Version:        1.06
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Date and time object
 License:        Artistic 2.0
 Group:          Development/Libraries
@@ -10,6 +10,8 @@ Source0:        http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-%{version}.
 # Restore object after failed truncate() call, bug #1095104, CPAN RT#93347,
 # in 1.09
 Patch0:         DateTime-1.06-Don-t-leave-the-object-in-a-modified-state-after-a-f.patch
+# Adjust tests to DateTime-TimeZone-1.74, bug #1136263, CPAN RT#98483, in 1.11
+Patch1:         DateTime-1.06-Fixes-for-latest-DT-TZ.patch
 BuildRequires:  perl
 BuildRequires:  perl(Module::Build)
 BuildRequires:  perl(strict)
@@ -59,6 +61,7 @@ believed to be the birth of Jesus Christ.
 %prep
 %setup -q -n DateTime-%{version}
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{__perl} Build.PL installdirs=vendor optimize="%{optflags}"
@@ -79,6 +82,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{_mandir}/man3/*
 
 %changelog
+* Tue Sep 02 2014 Petr Pisar <ppisar@redhat.com> - 2:1.06-3
+- Adjust tests to DateTime-TimeZone-1.74 (bug #1136263)
+
 * Wed May 07 2014 Petr Pisar <ppisar@redhat.com> - 2:1.06-2
 - Restore object after failed truncate() call (bug #1095104)
 
