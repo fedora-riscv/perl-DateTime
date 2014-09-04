@@ -1,7 +1,7 @@
 Name:           perl-DateTime
 Epoch:          2
 Version:        1.12
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
 Group:          Development/Libraries
@@ -86,6 +86,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{_mandir}/man3/*
 
 %changelog
+* Wed Sep 03 2014 Jitka Plesnikova <jplesnik@redhat.com> - 2:1.12-2
+- Perl 5.20 rebuild
+
 * Tue Sep 02 2014 Petr Pisar <ppisar@redhat.com> - 2:1.12-1
 - 1.12 bump
 
