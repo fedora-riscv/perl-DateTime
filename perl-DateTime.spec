@@ -1,6 +1,6 @@
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.14
+Version:        1.17
 Release:        1%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
@@ -68,11 +68,11 @@ believed to be the birth of Jesus Christ.
 %setup -q -n DateTime-%{version}
 
 %build
-perl Build.PL installdirs=vendor optimize="%{optflags}"
+perl Build.PL --installdirs=vendor --optimize="%{optflags}"
 ./Build
 
 %install
-./Build install destdir=%{buildroot} create_packlist=0
+./Build install --destdir=%{buildroot} --create_packlist=0
 find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{_fixperms} %{buildroot}
 
@@ -80,12 +80,24 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 ./Build test
 
 %files
-%doc Changes CREDITS LICENSE README.md TODO
-%{perl_vendorarch}/auto/*
-%{perl_vendorarch}/DateTime*
-%{_mandir}/man3/*
+%license LICENSE
+%doc Changes CREDITS README.md TODO
+%{perl_vendorarch}/auto/DateTime/
+%{perl_vendorarch}/DateTime/
+%{perl_vendorarch}/DateTime.pm
+%{perl_vendorarch}/DateTimePP.pm
+%{perl_vendorarch}/DateTimePPExtra.pm
+%{_mandir}/man3/DateTime.3*
+%{_mandir}/man3/DateTime::Duration.3*
+%{_mandir}/man3/DateTime::Infinite.3*
+%{_mandir}/man3/DateTime::LeapSecond.3*
 
 %changelog
+* Mon Jan  5 2015 Paul Howarth <paul@city-fan.org> - 2:1.17-1
+- 1.17 bump
+- Use %%license
+- Make %%files list more explicit
+
 * Mon Jan  5 2015 Paul Howarth <paul@city-fan.org> - 2:1.14-1
 - 1.14 bump
 
