@@ -1,6 +1,6 @@
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.17
+Version:        1.18
 Release:        1%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
@@ -93,6 +93,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{_mandir}/man3/DateTime::LeapSecond.3*
 
 %changelog
+* Tue Jan  6 2015 Paul Howarth <paul@city-fan.org> - 2:1.18-1
+- 1.18 bump
+
 * Mon Jan  5 2015 Paul Howarth <paul@city-fan.org> - 2:1.17-1
 - 1.17 bump
 - Use %%license
