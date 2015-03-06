@@ -3,6 +3,10 @@ Epoch:          2
 Version:        1.18
 Release:        1%{?dist}
 Summary:        Date and time object for Perl
+# Even though lib/DateTime.xs says `the same as Perl', it also points to the
+# LICENSE file (Artistic 2.0).  Reading the changelog entry for v0.56 suggests
+# this was simply overlooked when re-licensing.
+# Reported as rt#102546
 License:        Artistic 2.0
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/DateTime/
