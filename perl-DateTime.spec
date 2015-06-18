@@ -1,7 +1,7 @@
 Name:           perl-DateTime
 Epoch:          2
 Version:        1.18
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Date and time object for Perl
 # Even though lib/DateTime.xs says `the same as Perl', it also points to the
 # LICENSE file (Artistic 2.0).  Reading the changelog entry for v0.56 suggests
@@ -97,6 +97,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{_mandir}/man3/DateTime::LeapSecond.3*
 
 %changelog
+* Thu Jun 18 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2:1.18-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
+
 * Sat Jun 06 2015 Jitka Plesnikova <jplesnik@redhat.com> - 2:1.18-2
 - Perl 5.22 rebuild
 
