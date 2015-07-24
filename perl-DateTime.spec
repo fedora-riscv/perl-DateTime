@@ -1,7 +1,7 @@
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.18
-Release:        3%{?dist}
+Version:        1.20
+Release:        1%{?dist}
 Summary:        Date and time object for Perl
 # Even though lib/DateTime.xs says `the same as Perl', it also points to the
 # LICENSE file (Artistic 2.0).  Reading the changelog entry for v0.56 suggests
@@ -23,7 +23,7 @@ BuildRequires:  perl(DateTime::Locale) >= 0.41
 BuildRequires:  perl(DateTime::TimeZone) >= 1.74
 BuildRequires:  perl(integer)
 BuildRequires:  perl(overload)
-BuildRequires:  perl(Params::Validate) >= 0.76
+BuildRequires:  perl(Params::Validate) >= 1.03
 BuildRequires:  perl(POSIX)
 BuildRequires:  perl(Scalar::Util)
 BuildRequires:  perl(Try::Tiny)
@@ -32,11 +32,10 @@ BuildRequires:  perl(warnings::register)
 BuildRequires:  perl(XSLoader)
 # Tests:
 # Cwd not used
-# Test::DependentModules not used
 BuildRequires:  perl(ExtUtils::MakeMaker)
 BuildRequires:  perl(File::Spec)
 BuildRequires:  perl(Test::Fatal)
-BuildRequires:  perl(Test::More) >= 0.88
+BuildRequires:  perl(Test::More) >= 0.96
 BuildRequires:  perl(Test::Warnings) >= 0.005
 BuildRequires:  perl(utf8)
 # Optional tests:
@@ -44,17 +43,17 @@ BuildRequires:  perl(utf8)
 # Pod::Coverage::TrustPod not used
 # Pod::Wordlist not used
 BuildRequires:  perl(Storable)
+# Test::Code::TidyAll 0.24 not used
+# Test::CPAN::Changes not used
 # Test::DependentModules not used
+# Test::EOL not used
 # Test::NoTabs not used
 # Test::Pod 1.41 not used
 # Test::Pod::Coverage 1.08 not used
 # Test::Spelling 0.12 not used
+# Test::Version not used
 Requires:       perl(:MODULE_COMPAT_%(eval "`perl -V:version`"; echo $version))
 Requires:       perl(XSLoader)
-
-# not automatically detected
-Provides:       perl(DateTimePP) = %{version}
-Provides:       perl(DateTimePPExtra) = %{version}
 
 %{?perl_default_filter}
 # Filter under-specified dependencies
@@ -89,14 +88,15 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendorarch}/auto/DateTime/
 %{perl_vendorarch}/DateTime/
 %{perl_vendorarch}/DateTime.pm
-%{perl_vendorarch}/DateTimePP.pm
-%{perl_vendorarch}/DateTimePPExtra.pm
 %{_mandir}/man3/DateTime.3*
 %{_mandir}/man3/DateTime::Duration.3*
 %{_mandir}/man3/DateTime::Infinite.3*
 %{_mandir}/man3/DateTime::LeapSecond.3*
 
 %changelog
+* Fri Jul 24 2015 Petr Pisar <ppisar@redhat.com> - 2:1.20-1
+- 1.20 bump
+
 * Thu Jun 18 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2:1.18-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
