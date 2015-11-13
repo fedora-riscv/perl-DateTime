@@ -1,20 +1,19 @@
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.20
+Version:        1.21
 Release:        1%{?dist}
 Summary:        Date and time object for Perl
-# Even though lib/DateTime.xs says `the same as Perl', it also points to the
-# LICENSE file (Artistic 2.0).  Reading the changelog entry for v0.56 suggests
-# this was simply overlooked when re-licensing.
-# Reported as rt#102546
 License:        Artistic 2.0
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/DateTime/
 Source0:        http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-%{version}.tar.gz
+BuildRequires:  coreutils
+BuildRequires:  findutils
+BuildRequires:  gcc
+BuildRequires:  make
 BuildRequires:  perl
-BuildRequires:  perl(Module::Build)
-BuildRequires:  perl(strict)
-BuildRequires:  perl(warnings)
+BuildRequires:  perl-devel
+BuildRequires:  perl(Module::Build) >= 0.28
 # Run-time:
 BuildRequires:  perl(base)
 BuildRequires:  perl(Carp)
@@ -26,9 +25,12 @@ BuildRequires:  perl(overload)
 BuildRequires:  perl(Params::Validate) >= 1.03
 BuildRequires:  perl(POSIX)
 BuildRequires:  perl(Scalar::Util)
+BuildRequires:  perl(strict)
 BuildRequires:  perl(Try::Tiny)
 BuildRequires:  perl(vars)
+BuildRequires:  perl(warnings)
 BuildRequires:  perl(warnings::register)
+# Optional Run-time:
 BuildRequires:  perl(XSLoader)
 # Tests:
 # Cwd not used
@@ -39,6 +41,7 @@ BuildRequires:  perl(Test::More) >= 0.96
 BuildRequires:  perl(Test::Warnings) >= 0.005
 BuildRequires:  perl(utf8)
 # Optional tests:
+BuildRequires:  perl(CPAN::Meta) >= 2.120900
 # circular dependency - perl(DateTime::Format::Strptime) >= 1.2000
 # Pod::Coverage::TrustPod not used
 # Pod::Wordlist not used
@@ -52,10 +55,13 @@ BuildRequires:  perl(Storable)
 # Test::Pod::Coverage 1.08 not used
 # Test::Spelling 0.12 not used
 # Test::Version not used
+BuildRequires:  perl(Test::Warn)
 Requires:       perl(:MODULE_COMPAT_%(eval "`perl -V:version`"; echo $version))
 Requires:       perl(XSLoader)
 
+# Avoid provides from DateTime.so
 %{?perl_default_filter}
+
 # Filter under-specified dependencies
 %global __requires_exclude %{?__requires_exclude:%__requires_exclude|}^perl\\((DateTime::Locale|DateTime::TimeZone|Params::Validate)\\)$
 
@@ -94,6 +100,11 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{_mandir}/man3/DateTime::LeapSecond.3*
 
 %changelog
+* Fri Nov 13 2015 Paul Howarth <paul@city-fan.org> - 2:1.21-1
+- Update to 1.21
+  - Make all tests pass with the current DateTime::Locale
+- Explicitly BR: perl-devel, needed for EXTERN.h
+
 * Fri Jul 24 2015 Petr Pisar <ppisar@redhat.com> - 2:1.20-1
 - 1.20 bump
 
