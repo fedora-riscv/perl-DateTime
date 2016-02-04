@@ -1,7 +1,7 @@
 Name:           perl-DateTime
 Epoch:          2
 Version:        1.21
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
 Group:          Development/Libraries
@@ -100,6 +100,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{_mandir}/man3/DateTime::LeapSecond.3*
 
 %changelog
+* Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 2:1.21-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
+
 * Fri Nov 13 2015 Paul Howarth <paul@city-fan.org> - 2:1.21-1
 - Update to 1.21
   - Make all tests pass with the current DateTime::Locale
