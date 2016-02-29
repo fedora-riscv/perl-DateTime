@@ -1,7 +1,7 @@
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.21
-Release:        2%{?dist}
+Version:        1.23
+Release:        1%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
 Group:          Development/Libraries
@@ -48,6 +48,7 @@ BuildRequires:  perl(CPAN::Meta) >= 2.120900
 BuildRequires:  perl(Storable)
 # Test::Code::TidyAll 0.24 not used
 # Test::CPAN::Changes not used
+# Test::CPAN::Meta::JSON not used
 # Test::DependentModules not used
 # Test::EOL not used
 # Test::NoTabs not used
@@ -100,6 +101,23 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{_mandir}/man3/DateTime::LeapSecond.3*
 
 %changelog
+* Mon Feb 29 2016 Paul Howarth <paul@city-fan.org> - 2:1.23-1
+- Update to 1.23
+  - Fixed several issues with the handling of non-integer values passed to
+    from_epoch() (GH#11)
+    - This method was simply broken for negative values, which would end up
+      being incremented by a full second, so for example -0.5 became 0.5
+    - The method did not accept all valid float values; specifically, it did
+      not accept values in scientific notation
+    - Finally, this method now rounds all non-integer values to the nearest
+      millisecond, which matches the precision we can expect from Perl itself
+      (53 bits) in most cases
+  - Make all DateTime::Infinite objects return the system's representation of
+    positive or negative infinity for any method that returns a number or
+    string representation (year(), month(), ymd(), iso8601(), etc.); previously
+    some of these methods could return "Nan", "-Inf--Inf--Inf", and other
+    confusing outputs (CPAN RT#110341)
+
 * Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 2:1.21-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
