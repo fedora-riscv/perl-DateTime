@@ -1,6 +1,6 @@
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.23
+Version:        1.24
 Release:        1%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
@@ -101,6 +101,11 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{_mandir}/man3/DateTime::LeapSecond.3*
 
 %changelog
+* Tue Mar  1 2016 Paul Howarth <paul@city-fan.org> - 2:1.24-1
+- Update to 1.24
+  - The last release partially broke $dt->time; if you passed a value to use
+    as unit separator, it was ignored (CPAN RT#112585)
+
 * Mon Feb 29 2016 Paul Howarth <paul@city-fan.org> - 2:1.23-1
 - Update to 1.23
   - Fixed several issues with the handling of non-integer values passed to
