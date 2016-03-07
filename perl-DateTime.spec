@@ -1,6 +1,6 @@
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.24
+Version:        1.25
 Release:        1%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
@@ -83,7 +83,7 @@ perl Build.PL --installdirs=vendor --optimize="%{optflags}"
 
 %install
 ./Build install --destdir=%{buildroot} --create_packlist=0
-find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
+find %{buildroot} -type f -name '*.bs' -empty -delete
 %{_fixperms} %{buildroot}
 
 %check
@@ -101,6 +101,12 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{_mandir}/man3/DateTime::LeapSecond.3*
 
 %changelog
+* Mon Mar  7 2016 Paul Howarth <paul@city-fan.org> - 2:1.25-1
+- Update to 1.25
+  - DateTime->from_object would die if given a DateTime::Infinite object; now
+    it returns another DateTime::Infinite object (CPAN RT#112712)
+- Simplify find command using -empty and -delete
+
 * Tue Mar  1 2016 Paul Howarth <paul@city-fan.org> - 2:1.24-1
 - Update to 1.24
   - The last release partially broke $dt->time; if you passed a value to use
