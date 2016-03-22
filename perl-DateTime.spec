@@ -1,6 +1,6 @@
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.25
+Version:        1.26
 Release:        1%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
@@ -13,7 +13,7 @@ BuildRequires:  gcc
 BuildRequires:  make
 BuildRequires:  perl
 BuildRequires:  perl-devel
-BuildRequires:  perl(Module::Build) >= 0.28
+BuildRequires:  perl(ExtUtils::MakeMaker)
 # Run-time:
 BuildRequires:  perl(base)
 BuildRequires:  perl(Carp)
@@ -33,30 +33,17 @@ BuildRequires:  perl(warnings::register)
 # Optional Run-time:
 BuildRequires:  perl(XSLoader)
 # Tests:
-# Cwd not used
 BuildRequires:  perl(ExtUtils::MakeMaker)
 BuildRequires:  perl(File::Spec)
 BuildRequires:  perl(Test::Fatal)
 BuildRequires:  perl(Test::More) >= 0.96
 BuildRequires:  perl(Test::Warnings) >= 0.005
 BuildRequires:  perl(utf8)
-# Optional tests:
+# Optional Tests:
 BuildRequires:  perl(CPAN::Meta) >= 2.120900
-# circular dependency - perl(DateTime::Format::Strptime) >= 1.2000
-# Pod::Coverage::TrustPod not used
-# Pod::Wordlist not used
 BuildRequires:  perl(Storable)
-# Test::Code::TidyAll 0.24 not used
-# Test::CPAN::Changes not used
-# Test::CPAN::Meta::JSON not used
-# Test::DependentModules not used
-# Test::EOL not used
-# Test::NoTabs not used
-# Test::Pod 1.41 not used
-# Test::Pod::Coverage 1.08 not used
-# Test::Spelling 0.12 not used
-# Test::Version not used
 BuildRequires:  perl(Test::Warn)
+# Dependencies:
 Requires:       perl(:MODULE_COMPAT_%(eval "`perl -V:version`"; echo $version))
 Requires:       perl(XSLoader)
 
@@ -78,20 +65,21 @@ believed to be the birth of Jesus Christ.
 %setup -q -n DateTime-%{version}
 
 %build
-perl Build.PL --installdirs=vendor --optimize="%{optflags}"
-./Build
+perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
+make %{?_smp_mflags}
 
 %install
-./Build install --destdir=%{buildroot} --create_packlist=0
+make pure_install DESTDIR=%{buildroot}
+find %{buildroot} -type f -name .packlist -delete
 find %{buildroot} -type f -name '*.bs' -empty -delete
 %{_fixperms} %{buildroot}
 
 %check
-./Build test
+make test
 
 %files
 %license LICENSE
-%doc Changes CREDITS README.md TODO
+%doc Changes CONTRIBUTING.md CREDITS README.md TODO
 %{perl_vendorarch}/auto/DateTime/
 %{perl_vendorarch}/DateTime/
 %{perl_vendorarch}/DateTime.pm
@@ -101,6 +89,10 @@ find %{buildroot} -type f -name '*.bs' -empty -delete
 %{_mandir}/man3/DateTime::LeapSecond.3*
 
 %changelog
+* Tue Mar 22 2016 Paul Howarth <paul@city-fan.org> - 2:1.26-1
+- Update to 1.26
+  - Switched from Module::Build to ExtUtils::MakeMaker (GH#13)
+
 * Mon Mar  7 2016 Paul Howarth <paul@city-fan.org> - 2:1.25-1
 - Update to 1.25
   - DateTime->from_object would die if given a DateTime::Infinite object; now
