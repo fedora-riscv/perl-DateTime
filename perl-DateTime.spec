@@ -1,6 +1,6 @@
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.26
+Version:        1.27
 Release:        1%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
@@ -13,6 +13,7 @@ BuildRequires:  gcc
 BuildRequires:  make
 BuildRequires:  perl
 BuildRequires:  perl-devel
+BuildRequires:  perl-generators
 BuildRequires:  perl(ExtUtils::MakeMaker)
 # Run-time:
 BuildRequires:  perl(base)
@@ -89,6 +90,12 @@ make test
 %{_mandir}/man3/DateTime::LeapSecond.3*
 
 %changelog
+* Sat May 14 2016 Paul Howarth <paul@city-fan.org> - 2:1.27-1
+- Update to 1.27
+  - Added an environment variable PERL_DATETIME_DEFAULT_TZ to globally set the
+    default time zone (GH#14); using this is very dangerous - be careful!
+- BR: perl-generators
+
 * Tue Mar 22 2016 Paul Howarth <paul@city-fan.org> - 2:1.26-1
 - Update to 1.26
   - Switched from Module::Build to ExtUtils::MakeMaker (GH#13)
