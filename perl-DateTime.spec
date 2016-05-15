@@ -1,7 +1,7 @@
 Name:           perl-DateTime
 Epoch:          2
 Version:        1.27
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
 Group:          Development/Libraries
@@ -90,6 +90,9 @@ make test
 %{_mandir}/man3/DateTime::LeapSecond.3*
 
 %changelog
+* Sun May 15 2016 Jitka Plesnikova <jplesnik@redhat.com> - 2:1.27-2
+- Perl 5.24 rebuild
+
 * Sat May 14 2016 Paul Howarth <paul@city-fan.org> - 2:1.27-1
 - Update to 1.27
   - Added an environment variable PERL_DATETIME_DEFAULT_TZ to globally set the
