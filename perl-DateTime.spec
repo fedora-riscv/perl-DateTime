@@ -1,7 +1,7 @@
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.27
-Release:        2%{?dist}
+Version:        1.28
+Release:        1%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
 Group:          Development/Libraries
@@ -90,6 +90,12 @@ make test
 %{_mandir}/man3/DateTime::LeapSecond.3*
 
 %changelog
+* Sun May 22 2016 Paul Howarth <paul@city-fan.org> - 2:1.28-1
+- Update to 1.28
+  - Fixed handling of some floating point epochs; since DateTime treated the
+    epoch like a string instead of a number, certain epochs with a non-integer
+    value ended up treated like integers (Perl is weird) (GH#15, fixes GH#6)
+
 * Sun May 15 2016 Jitka Plesnikova <jplesnik@redhat.com> - 2:1.27-2
 - Perl 5.24 rebuild
 
