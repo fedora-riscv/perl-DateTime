@@ -1,6 +1,6 @@
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.28
+Version:        1.33
 Release:        1%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
@@ -14,13 +14,14 @@ BuildRequires:  make
 BuildRequires:  perl
 BuildRequires:  perl-devel
 BuildRequires:  perl-generators
-BuildRequires:  perl(ExtUtils::MakeMaker)
+BuildRequires:  perl(ExtUtils::MakeMaker) >= 6.76
 # Run-time:
 BuildRequires:  perl(base)
 BuildRequires:  perl(Carp)
 BuildRequires:  perl(constant)
-BuildRequires:  perl(DateTime::Locale) >= 0.41
-BuildRequires:  perl(DateTime::TimeZone) >= 1.74
+BuildRequires:  perl(DateTime::Locale) >= 1.05
+BuildRequires:  perl(DateTime::TimeZone) >= 2.00
+BuildRequires:  perl(Dist::CheckConflicts) >= 0.02
 BuildRequires:  perl(integer)
 BuildRequires:  perl(overload)
 BuildRequires:  perl(Params::Validate) >= 1.03
@@ -34,6 +35,8 @@ BuildRequires:  perl(warnings::register)
 # Optional Run-time:
 BuildRequires:  perl(XSLoader)
 # Tests:
+BuildRequires:  perl(CPAN::Meta::Check) >= 0.011
+BuildRequires:  perl(CPAN::Meta::Requirements)
 BuildRequires:  perl(ExtUtils::MakeMaker)
 BuildRequires:  perl(File::Spec)
 BuildRequires:  perl(Test::Fatal)
@@ -66,12 +69,11 @@ believed to be the birth of Jesus Christ.
 %setup -q -n DateTime-%{version}
 
 %build
-perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
+perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}" NO_PACKLIST=1
 make %{?_smp_mflags}
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -delete
 find %{buildroot} -type f -name '*.bs' -empty -delete
 %{_fixperms} %{buildroot}
 
@@ -90,6 +92,17 @@ make test
 %{_mandir}/man3/DateTime::LeapSecond.3*
 
 %changelog
+* Wed Jun 29 2016 Paul Howarth <paul@city-fan.org> - 2:1.33-1
+- Update to 1.33
+  - When you pass a locale to $dt->set you will now get a warning suggesting
+    you should use $dt->set_locale instead (CPAN RT#115420)
+  - Added support for $dt->truncate( to => 'quarter' ) (GH#17)
+  - Fixed the $dt->set docs to say that you cannot pass a locale (even though
+    you can but you'll get a warning) and added more docs for $dt->set_locale
+  - Require DateTime::Locale 1.05
+  - Require DateTime::TimeZone 2.00
+- Take advantage of NO_PACKLIST option in recent EU:MM
+
 * Sun May 22 2016 Paul Howarth <paul@city-fan.org> - 2:1.28-1
 - Update to 1.28
   - Fixed handling of some floating point epochs; since DateTime treated the
