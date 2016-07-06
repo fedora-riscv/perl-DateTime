@@ -1,6 +1,6 @@
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.33
+Version:        1.34
 Release:        1%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
@@ -92,6 +92,10 @@ make test
 %{_mandir}/man3/DateTime::LeapSecond.3*
 
 %changelog
+* Wed Jul  6 2016 Paul Howarth <paul@city-fan.org> - 2:1.34-1
+- Update to 1.34
+  - Added the leap second coming on December 31, 2016
+
 * Wed Jun 29 2016 Paul Howarth <paul@city-fan.org> - 2:1.33-1
 - Update to 1.33
   - When you pass a locale to $dt->set you will now get a warning suggesting
