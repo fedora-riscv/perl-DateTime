@@ -1,12 +1,13 @@
 Name:           perl-DateTime
 Epoch:          2
 Version:        1.28
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/DateTime/
 Source0:        http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-%{version}.tar.gz
+Patch0:         DateTime-1.28-leapsecond.patch
 BuildRequires:  coreutils
 BuildRequires:  findutils
 BuildRequires:  gcc
@@ -65,6 +66,9 @@ believed to be the birth of Jesus Christ.
 %prep
 %setup -q -n DateTime-%{version}
 
+# Add the leap second coming on December 31, 2016
+%patch0
+
 %build
 perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
 make %{?_smp_mflags}
@@ -90,6 +94,9 @@ make test
 %{_mandir}/man3/DateTime::LeapSecond.3*
 
 %changelog
+* Wed Jul  6 2016 Paul Howarth <paul@city-fan.org> - 2:1.28-2
+- Added the leap second coming on December 31, 2016
+
 * Sun May 22 2016 Paul Howarth <paul@city-fan.org> - 2:1.28-1
 - Update to 1.28
   - Fixed handling of some floating point epochs; since DateTime treated the
