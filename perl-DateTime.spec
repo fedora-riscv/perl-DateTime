@@ -1,7 +1,7 @@
 Name:           perl-DateTime
 Epoch:          2
 Version:        1.18
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Date and time object for Perl
 # Even though lib/DateTime.xs says `the same as Perl', it also points to the
 # LICENSE file (Artistic 2.0).  Reading the changelog entry for v0.56 suggests
@@ -11,7 +11,13 @@ License:        Artistic 2.0
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/DateTime/
 Source0:        http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-%{version}.tar.gz
+Patch0:         DateTime-1.18-leapsecond.patch
+BuildRequires:  coreutils
+BuildRequires:  findutils
+BuildRequires:  gcc
 BuildRequires:  perl
+BuildRequires:  perl-devel
+BuildRequires:  perl-generators
 BuildRequires:  perl(Module::Build)
 BuildRequires:  perl(strict)
 BuildRequires:  perl(warnings)
@@ -71,13 +77,16 @@ believed to be the birth of Jesus Christ.
 %prep
 %setup -q -n DateTime-%{version}
 
+# Add the leap second coming on December 31, 2016
+%patch0
+
 %build
 perl Build.PL --installdirs=vendor --optimize="%{optflags}"
 ./Build
 
 %install
 ./Build install --destdir=%{buildroot} --create_packlist=0
-find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
+find %{buildroot} -type f -name '*.bs' -empty -delete
 %{_fixperms} %{buildroot}
 
 %check
@@ -97,6 +106,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{_mandir}/man3/DateTime::LeapSecond.3*
 
 %changelog
+* Wed Jul  6 2016 Paul Howarth <paul@city-fan.org> - 2:1.18-4
+- Added the leap second coming on December 31, 2016
+
 * Thu Jun 18 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2:1.18-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
