@@ -1,6 +1,6 @@
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.34
+Version:        1.35
 Release:        1%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
@@ -23,13 +23,13 @@ BuildRequires:  perl(DateTime::Locale) >= 1.05
 BuildRequires:  perl(DateTime::TimeZone) >= 2.00
 BuildRequires:  perl(Dist::CheckConflicts) >= 0.02
 BuildRequires:  perl(integer)
+BuildRequires:  perl(namespace::autoclean)
 BuildRequires:  perl(overload)
 BuildRequires:  perl(Params::Validate) >= 1.03
 BuildRequires:  perl(POSIX)
 BuildRequires:  perl(Scalar::Util)
 BuildRequires:  perl(strict)
 BuildRequires:  perl(Try::Tiny)
-BuildRequires:  perl(vars)
 BuildRequires:  perl(warnings)
 BuildRequires:  perl(warnings::register)
 # Optional Run-time:
@@ -92,6 +92,12 @@ make test
 %{_mandir}/man3/DateTime::LeapSecond.3*
 
 %changelog
+* Sat Aug  6 2016 Paul Howarth <paul@city-fan.org> - 2:1.35-1
+- Update to 1.35
+  - Use namespace::autoclean in all packages that import anything; without
+    cleaning the namespace, DateTime ends up with "methods" like try and catch
+    (from Try::Tiny), which can lead to very confusing bugs (CPAN RT#115983)
+
 * Wed Jul  6 2016 Paul Howarth <paul@city-fan.org> - 2:1.34-1
 - Update to 1.34
   - Added the leap second coming on December 31, 2016
