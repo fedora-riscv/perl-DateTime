@@ -1,6 +1,6 @@
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.35
+Version:        1.36
 Release:        1%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
@@ -23,7 +23,7 @@ BuildRequires:  perl(DateTime::Locale) >= 1.05
 BuildRequires:  perl(DateTime::TimeZone) >= 2.00
 BuildRequires:  perl(Dist::CheckConflicts) >= 0.02
 BuildRequires:  perl(integer)
-BuildRequires:  perl(namespace::autoclean)
+BuildRequires:  perl(namespace::autoclean) >= 0.19
 BuildRequires:  perl(overload)
 BuildRequires:  perl(Params::Validate) >= 1.03
 BuildRequires:  perl(POSIX)
@@ -92,6 +92,10 @@ make test
 %{_mandir}/man3/DateTime::LeapSecond.3*
 
 %changelog
+* Sun Aug  7 2016 Paul Howarth <paul@city-fan.org> - 2:1.36-1
+- Update to 1.36
+  - Require namespace::autoclean 0.19
+
 * Sat Aug  6 2016 Paul Howarth <paul@city-fan.org> - 2:1.35-1
 - Update to 1.35
   - Use namespace::autoclean in all packages that import anything; without
