@@ -1,12 +1,13 @@
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.36
+Version:        1.39
 Release:        1%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/DateTime/
 Source0:        http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-%{version}.tar.gz
+# Build:
 BuildRequires:  coreutils
 BuildRequires:  findutils
 BuildRequires:  gcc
@@ -18,21 +19,28 @@ BuildRequires:  perl(ExtUtils::MakeMaker) >= 6.76
 # Run-time:
 BuildRequires:  perl(base)
 BuildRequires:  perl(Carp)
-BuildRequires:  perl(constant)
-BuildRequires:  perl(DateTime::Locale) >= 1.05
-BuildRequires:  perl(DateTime::TimeZone) >= 2.00
+BuildRequires:  perl(DateTime::Locale) >= 1.06
+BuildRequires:  perl(DateTime::TimeZone) >= 2.02
 BuildRequires:  perl(Dist::CheckConflicts) >= 0.02
 BuildRequires:  perl(integer)
 BuildRequires:  perl(namespace::autoclean) >= 0.19
 BuildRequires:  perl(overload)
-BuildRequires:  perl(Params::Validate) >= 1.03
+BuildRequires:  perl(Params::ValidationCompiler) >= 0.13
+BuildRequires:  perl(parent)
 BuildRequires:  perl(POSIX)
 BuildRequires:  perl(Scalar::Util)
+BuildRequires:  perl(Specio) >= 0.18
+BuildRequires:  perl(Specio::Declare)
+BuildRequires:  perl(Specio::Exporter)
+BuildRequires:  perl(Specio::Library::Builtins)
+BuildRequires:  perl(Specio::Library::Numeric)
+BuildRequires:  perl(Specio::Library::String)
 BuildRequires:  perl(strict)
 BuildRequires:  perl(Try::Tiny)
 BuildRequires:  perl(warnings)
 BuildRequires:  perl(warnings::register)
 # Optional Run-time:
+BuildRequires:  perl(Sub::Util) >= 1.40
 BuildRequires:  perl(XSLoader)
 # Tests:
 BuildRequires:  perl(CPAN::Meta::Check) >= 0.011
@@ -49,13 +57,14 @@ BuildRequires:  perl(Storable)
 BuildRequires:  perl(Test::Warn)
 # Dependencies:
 Requires:       perl(:MODULE_COMPAT_%(eval "`perl -V:version`"; echo $version))
+Requires:       perl(Sub::Util) >= 1.40
 Requires:       perl(XSLoader)
 
 # Avoid provides from DateTime.so
 %{?perl_default_filter}
 
 # Filter under-specified dependencies
-%global __requires_exclude %{?__requires_exclude:%__requires_exclude|}^perl\\((DateTime::Locale|DateTime::TimeZone|Params::Validate)\\)$
+%global __requires_exclude %{?__requires_exclude:%__requires_exclude|}^perl\\((DateTime::Locale|DateTime::TimeZone)\\)$
 
 %description
 DateTime is a class for the representation of date/time combinations.  It
@@ -69,11 +78,15 @@ believed to be the birth of Jesus Christ.
 %setup -q -n DateTime-%{version}
 
 %build
-perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}" NO_PACKLIST=1
+perl Makefile.PL \
+  INSTALLDIRS=vendor \
+  OPTIMIZE="%{optflags}" \
+  NO_PACKLIST=1 \
+  NO_PERLLOCAL=1
 make %{?_smp_mflags}
 
 %install
-make pure_install DESTDIR=%{buildroot}
+make install DESTDIR=%{buildroot}
 find %{buildroot} -type f -name '*.bs' -empty -delete
 %{_fixperms} %{buildroot}
 
@@ -90,8 +103,22 @@ make test
 %{_mandir}/man3/DateTime::Duration.3*
 %{_mandir}/man3/DateTime::Infinite.3*
 %{_mandir}/man3/DateTime::LeapSecond.3*
+%{_mandir}/man3/DateTime::Types.3*
 
 %changelog
+* Mon Sep 19 2016 Paul Howarth <paul@city-fan.org> - 2:1.39-1
+- Update to 1.39
+  - Replaced Params::Validate with Params::ValidationCompiler and Specio
+    - In my benchmarks this makes constructing a new DateTime object about 14%%
+      faster
+    - However, it slows down module load time by about 100 milliseconds (1/10
+      of a second) on my desktop system with a primed cache (so really
+      measuring compile time, not disk load time)
+  - When you pass a locale to $dt->set you will now get a warning suggesting
+    you should use $dt->set_locale instead (CPAN RT#115420)
+  - Bump minimum required Perl to 5.8.4 from 5.8.1
+- Use NO_PERLLOCAL=1 so we can use "make install"
+
 * Sun Aug  7 2016 Paul Howarth <paul@city-fan.org> - 2:1.36-1
 - Update to 1.36
   - Require namespace::autoclean 0.19
