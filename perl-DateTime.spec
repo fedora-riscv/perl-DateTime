@@ -1,6 +1,6 @@
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.39
+Version:        1.40
 Release:        1%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
@@ -106,6 +106,10 @@ make test
 %{_mandir}/man3/DateTime::Types.3*
 
 %changelog
+* Sun Nov 13 2016 Paul Howarth <paul@city-fan.org> - 2:1.40-1
+- Update to 1.40
+  - Switched from RT to the GitHub issue tracker
+
 * Mon Sep 19 2016 Paul Howarth <paul@city-fan.org> - 2:1.39-1
 - Update to 1.39
   - Replaced Params::Validate with Params::ValidationCompiler and Specio
