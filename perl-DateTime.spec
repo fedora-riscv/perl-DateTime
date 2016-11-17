@@ -1,6 +1,6 @@
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.40
+Version:        1.41
 Release:        1%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
@@ -106,6 +106,12 @@ make test
 %{_mandir}/man3/DateTime::Types.3*
 
 %changelog
+* Thu Nov 17 2016 Paul Howarth <paul@city-fan.org> - 2:1.41-1
+- Update to 1.41
+  - The DateTime->add and ->subtract methods now accept DateTime::Duration
+    objects; this used to work by accident but is now done intentionally, with
+    docs and tests (GH#45)
+
 * Sun Nov 13 2016 Paul Howarth <paul@city-fan.org> - 2:1.40-1
 - Update to 1.40
   - Switched from RT to the GitHub issue tracker
