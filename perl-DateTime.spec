@@ -110,7 +110,7 @@ make test
 - Update to 1.42
   - The DateTime::Duration->add and ->subtract methods now accept
     DateTime::Duration objects; this used to work by accident but is now done
-    intentionallay, with docs and tests (GH#50)
+    intentionally, with docs and tests (GH#50)
 
 * Thu Nov 17 2016 Paul Howarth <paul@city-fan.org> - 2:1.41-1
 - Update to 1.41
