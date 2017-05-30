@@ -1,10 +1,9 @@
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.42
-Release:        2%{?dist}
+Version:        1.43
+Release:        1%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
-Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/DateTime/
 Source0:        http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-%{version}.tar.gz
 # Build:
@@ -106,6 +105,15 @@ make test
 %{_mandir}/man3/DateTime::Types.3*
 
 %changelog
+* Tue May 30 2017 Paul Howarth <paul@city-fan.org> - 2:1.43-1
+- Update to 1.43
+  - Added a small optimization for boolification overloading: rather than
+    relying on a fallback to stringification, we now return true directly,
+    which is a little faster in cases like "if ($might_be_dt) { ... }"
+  - The datetime() method now accepts a single argument to use as the separator
+    between the date and time portion; this defaults to "T"
+- Drop redundant Group: tag
+
 * Sat Feb 11 2017 Fedora Release Engineering <releng@fedoraproject.org> - 2:1.42-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 
