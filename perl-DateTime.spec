@@ -1,7 +1,7 @@
 Name:           perl-DateTime
 Epoch:          2
 Version:        1.43
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
 URL:            http://search.cpan.org/dist/DateTime/
@@ -105,6 +105,9 @@ make test
 %{_mandir}/man3/DateTime::Types.3*
 
 %changelog
+* Tue Jun 06 2017 Jitka Plesnikova <jplesnik@redhat.com> - 2:1.43-2
+- Perl 5.26 rebuild
+
 * Tue May 30 2017 Paul Howarth <paul@city-fan.org> - 2:1.43-1
 - Update to 1.43
   - Added a small optimization for boolification overloading: rather than
