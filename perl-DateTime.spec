@@ -1,7 +1,7 @@
 Name:           perl-DateTime
 Epoch:          2
 Version:        1.43
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
 URL:            http://search.cpan.org/dist/DateTime/
@@ -105,6 +105,9 @@ make test
 %{_mandir}/man3/DateTime::Types.3*
 
 %changelog
+* Thu Jul 27 2017 Fedora Release Engineering <releng@fedoraproject.org> - 2:1.43-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
+
 * Tue Jun 06 2017 Jitka Plesnikova <jplesnik@redhat.com> - 2:1.43-2
 - Perl 5.26 rebuild
 
