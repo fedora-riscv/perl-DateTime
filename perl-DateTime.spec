@@ -1,7 +1,7 @@
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.43
-Release:        4%{?dist}
+Version:        1.44
+Release:        1%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
 URL:            http://search.cpan.org/dist/DateTime/
@@ -105,6 +105,13 @@ make test
 %{_mandir}/man3/DateTime::Types.3*
 
 %changelog
+* Tue Aug 22 2017 Paul Howarth <paul@city-fan.org> - 2:1.44-1
+- Update to 1.44
+  - Added a stringify() method, which does exactly the same thing as
+    stringification overloading does (GH#58)
+  - Added an is_last_day_of_month() method to indicate whether or not an object
+    falls on the last day of its month (GH#60)
+
 * Thu Aug 03 2017 Fedora Release Engineering <releng@fedoraproject.org> - 2:1.43-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
 
