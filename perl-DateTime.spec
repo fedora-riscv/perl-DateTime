@@ -1,3 +1,6 @@
+# Run optional test
+%bcond_without perl_DateTime_enables_optional_test
+
 Name:           perl-DateTime
 Epoch:          2
 Version:        1.44
@@ -50,10 +53,12 @@ BuildRequires:  perl(Test::Fatal)
 BuildRequires:  perl(Test::More) >= 0.96
 BuildRequires:  perl(Test::Warnings) >= 0.005
 BuildRequires:  perl(utf8)
+%if %{with perl_DateTime_enables_optional_test}
 # Optional Tests:
 BuildRequires:  perl(CPAN::Meta) >= 2.120900
 BuildRequires:  perl(Storable)
 BuildRequires:  perl(Test::Warn)
+%endif
 # Dependencies:
 Requires:       perl(:MODULE_COMPAT_%(eval "`perl -V:version`"; echo $version))
 Requires:       perl(Sub::Util) >= 1.40
