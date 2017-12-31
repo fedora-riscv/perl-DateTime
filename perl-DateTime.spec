@@ -3,7 +3,7 @@
 
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.44
+Version:        1.45
 Release:        1%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
@@ -27,7 +27,7 @@ BuildRequires:  perl(Dist::CheckConflicts) >= 0.02
 BuildRequires:  perl(integer)
 BuildRequires:  perl(namespace::autoclean) >= 0.19
 BuildRequires:  perl(overload)
-BuildRequires:  perl(Params::ValidationCompiler) >= 0.13
+BuildRequires:  perl(Params::ValidationCompiler) >= 0.26
 BuildRequires:  perl(parent)
 BuildRequires:  perl(POSIX)
 BuildRequires:  perl(Scalar::Util)
@@ -42,7 +42,6 @@ BuildRequires:  perl(Try::Tiny)
 BuildRequires:  perl(warnings)
 BuildRequires:  perl(warnings::register)
 # Optional Run-time:
-BuildRequires:  perl(Sub::Util) >= 1.40
 BuildRequires:  perl(XSLoader)
 # Tests:
 BuildRequires:  perl(CPAN::Meta::Check) >= 0.011
@@ -61,7 +60,6 @@ BuildRequires:  perl(Test::Warn)
 %endif
 # Dependencies:
 Requires:       perl(:MODULE_COMPAT_%(eval "`perl -V:version`"; echo $version))
-Requires:       perl(Sub::Util) >= 1.40
 Requires:       perl(XSLoader)
 
 # Avoid provides from DateTime.so
@@ -110,6 +108,10 @@ make test
 %{_mandir}/man3/DateTime::Types.3*
 
 %changelog
+* Sun Dec 31 2017 Paul Howarth <paul@city-fan.org> - 2:1.45-1
+- Update to 1.45
+  - Added month_length(), quarter_length() and year_length() methods (GH#70)
+
 * Tue Aug 22 2017 Paul Howarth <paul@city-fan.org> - 2:1.44-1
 - Update to 1.44
   - Added a stringify() method, which does exactly the same thing as
