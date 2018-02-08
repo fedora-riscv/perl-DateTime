@@ -4,7 +4,7 @@
 Name:           perl-DateTime
 Epoch:          2
 Version:        1.45
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
 URL:            http://search.cpan.org/dist/DateTime/
@@ -108,6 +108,9 @@ make test
 %{_mandir}/man3/DateTime::Types.3*
 
 %changelog
+* Thu Feb 08 2018 Fedora Release Engineering <releng@fedoraproject.org> - 2:1.45-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
+
 * Sun Dec 31 2017 Paul Howarth <paul@city-fan.org> - 2:1.45-1
 - Update to 1.45
   - Added month_length(), quarter_length() and year_length() methods (GH#70)
