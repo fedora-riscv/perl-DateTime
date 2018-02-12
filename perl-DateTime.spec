@@ -3,8 +3,8 @@
 
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.45
-Release:        2%{?dist}
+Version:        1.46
+Release:        1%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
 URL:            http://search.cpan.org/dist/DateTime/
@@ -108,6 +108,12 @@ make test
 %{_mandir}/man3/DateTime::Types.3*
 
 %changelog
+* Mon Feb 12 2018 Paul Howarth <paul@city-fan.org> - 2:1.46-1
+- Update to 1.46
+  - Fixed the formatting for the CLDR "S" symbol, which in some cases would
+    round up to 1 instead of truncating a value, e.g. the "SSS" symbol would
+    format 999,999,999 nanoseconds as "1.000" (GH#71)
+
 * Thu Feb 08 2018 Fedora Release Engineering <releng@fedoraproject.org> - 2:1.45-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
