@@ -3,12 +3,13 @@
 
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.46
+Version:        1.47
 Release:        1%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
 URL:            http://search.cpan.org/dist/DateTime/
 Source0:        http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-%{version}.tar.gz
+Patch0:         DateTime-1.47-no-Sub::Util.patch
 # Build:
 BuildRequires:  coreutils
 BuildRequires:  findutils
@@ -79,6 +80,9 @@ believed to be the birth of Jesus Christ.
 %prep
 %setup -q -n DateTime-%{version}
 
+# Support use without Sub::Util (GH#77, GH#78)
+%patch0
+
 %build
 perl Makefile.PL \
   INSTALLDIRS=vendor \
@@ -108,6 +112,15 @@ make test
 %{_mandir}/man3/DateTime::Types.3*
 
 %changelog
+* Mon Mar 26 2018 Paul Howarth <paul@city-fan.org> - 2:1.47-1
+- Update to 1.47
+  - DateTime::Duration->multiply now only allows integer multipliers (GH#73)
+  - Added is_last_day_of_quarter() and is_last_day_of_year() methods (GH#72)
+  - When an exception was thrown while adding a duration, the object could be
+    left in a broken state with the duration partially applied; subsequent
+    addition or subtraction would produce the wrong results (GH#74)
+- Add patch to support use without Sub::Util (GH#77, GH#78)
+
 * Mon Feb 12 2018 Paul Howarth <paul@city-fan.org> - 2:1.46-1
 - Update to 1.46
   - Fixed the formatting for the CLDR "S" symbol, which in some cases would
