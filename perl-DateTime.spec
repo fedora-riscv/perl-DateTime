@@ -3,13 +3,12 @@
 
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.47
+Version:        1.48
 Release:        1%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
 URL:            http://search.cpan.org/dist/DateTime/
 Source0:        http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-%{version}.tar.gz
-Patch0:         DateTime-1.47-no-Sub::Util.patch
 # Build:
 BuildRequires:  coreutils
 BuildRequires:  findutils
@@ -80,9 +79,6 @@ believed to be the birth of Jesus Christ.
 %prep
 %setup -q -n DateTime-%{version}
 
-# Support use without Sub::Util (GH#77, GH#78)
-%patch0
-
 %build
 perl Makefile.PL \
   INSTALLDIRS=vendor \
@@ -112,6 +108,11 @@ make test
 %{_mandir}/man3/DateTime::Types.3*
 
 %changelog
+* Mon Mar 26 2018 Paul Howarth <paul@city-fan.org> - 2:1.48-1
+- Update to 1.48
+  - The last release would die if Sub::Util was not available, but this should
+    just be an optional requirement (GH#77, GH#78)
+
 * Mon Mar 26 2018 Paul Howarth <paul@city-fan.org> - 2:1.47-1
 - Update to 1.47
   - DateTime::Duration->multiply now only allows integer multipliers (GH#73)
