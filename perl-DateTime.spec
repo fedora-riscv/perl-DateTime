@@ -1,5 +1,9 @@
 # Run optional test
+%if ! (0%{?rhel})
 %bcond_without perl_DateTime_enables_optional_test
+%else
+%bcond_with perl_DateTime_enables_optional_test
+%endif
 
 Name:           perl-DateTime
 Epoch:          2
