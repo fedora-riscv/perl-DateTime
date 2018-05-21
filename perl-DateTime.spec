@@ -7,12 +7,12 @@
 
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.48
+Version:        1.49
 Release:        1%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
-URL:            http://search.cpan.org/dist/DateTime/
-Source0:        http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-%{version}.tar.gz
+URL:            https://metacpan.org/release/DateTime
+Source0:        https://cpan.metacpan.org/authors/id/D/DR/DROLSKY/DateTime-%{version}.tar.gz
 # Build:
 BuildRequires:  coreutils
 BuildRequires:  findutils
@@ -112,6 +112,12 @@ make test
 %{_mandir}/man3/DateTime::Types.3*
 
 %changelog
+* Mon May 21 2018 Paul Howarth <paul@city-fan.org> - 2:1.49-1
+- Update to 1.49
+  - Updated the ppport.h with the latest version of Devel::PPPort, which fixes
+    a compilation warning when compiling with 5.27.11 (GH#81)
+- Switch upstream from search.cpan.org to metacpan.org
+
 * Mon Mar 26 2018 Paul Howarth <paul@city-fan.org> - 2:1.48-1
 - Update to 1.48
   - The last release would die if Sub::Util was not available, but this should
