@@ -8,7 +8,7 @@
 Name:           perl-DateTime
 Epoch:          2
 Version:        1.49
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
 URL:            https://metacpan.org/release/DateTime
@@ -112,6 +112,9 @@ make test
 %{_mandir}/man3/DateTime::Types.3*
 
 %changelog
+* Fri Jun 29 2018 Jitka Plesnikova <jplesnik@redhat.com> - 2:1.49-2
+- Perl 5.28 rebuild
+
 * Mon May 21 2018 Paul Howarth <paul@city-fan.org> - 2:1.49-1
 - Update to 1.49
   - Updated the ppport.h with the latest version of Devel::PPPort, which fixes
