@@ -7,8 +7,8 @@
 
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.49
-Release:        3%{?dist}
+Version:        1.50
+Release:        1%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
 URL:            https://metacpan.org/release/DateTime
@@ -101,7 +101,7 @@ make test
 
 %files
 %license LICENSE
-%doc Changes CONTRIBUTING.md CREDITS README.md TODO
+%doc Changes CODE_OF_CONDUCT.md CONTRIBUTING.md CREDITS README.md TODO
 %{perl_vendorarch}/auto/DateTime/
 %{perl_vendorarch}/DateTime/
 %{perl_vendorarch}/DateTime.pm
@@ -112,6 +112,12 @@ make test
 %{_mandir}/man3/DateTime::Types.3*
 
 %changelog
+* Thu Aug  2 2018 Paul Howarth <paul@city-fan.org> - 2:1.50-1
+- Update to 1.50
+  - The %%F strftime pattern incorrectly zero-padded numbers less than four
+    digits; according to POSIX::strftime, this should output the year as-is
+    without padding (GH#83)
+
 * Fri Jul 13 2018 Fedora Release Engineering <releng@fedoraproject.org> - 2:1.49-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 
