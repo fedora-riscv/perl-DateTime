@@ -1,0 +1,7 @@
+from Config import *
+
+# proleptic: of a calendar, extrapolated to dates prior to its first adoption
+addFilter("spelling-error %description -l en_US proleptic -> ")
+
+# DateTime.so is not a library
+addFilter("library-not-linked-against-libc /usr/lib.*/DateTime/DateTime\.so")

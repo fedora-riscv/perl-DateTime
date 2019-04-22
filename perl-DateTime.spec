@@ -7,20 +7,20 @@
 
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.50
-Release:        2%{?dist}
+Version:        1.51
+Release:        1%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
 URL:            https://metacpan.org/release/DateTime
-Source0:        https://cpan.metacpan.org/authors/id/D/DR/DROLSKY/DateTime-%{version}.tar.gz
+Source0:        https://cpan.metacpan.org/modules/by-module/DateTime/DateTime-%{version}.tar.gz
 # Build:
 BuildRequires:  coreutils
 BuildRequires:  findutils
 BuildRequires:  gcc
 BuildRequires:  make
-BuildRequires:  perl-interpreter
 BuildRequires:  perl-devel
 BuildRequires:  perl-generators
+BuildRequires:  perl-interpreter
 BuildRequires:  perl(ExtUtils::MakeMaker) >= 6.76
 # Run-time:
 BuildRequires:  perl(base)
@@ -59,6 +59,7 @@ BuildRequires:  perl(utf8)
 %if %{with perl_DateTime_enables_optional_test}
 # Optional Tests:
 BuildRequires:  perl(CPAN::Meta) >= 2.120900
+BuildRequires:  perl(DateTime::Format::Strptime)
 BuildRequires:  perl(Storable)
 BuildRequires:  perl(Test::Warn)
 %endif
@@ -89,12 +90,12 @@ perl Makefile.PL \
   OPTIMIZE="%{optflags}" \
   NO_PACKLIST=1 \
   NO_PERLLOCAL=1
-make %{?_smp_mflags}
+%{make_build}
 
 %install
-make install DESTDIR=%{buildroot}
+%{make_install}
 find %{buildroot} -type f -name '*.bs' -empty -delete
-%{_fixperms} %{buildroot}
+%{_fixperms} -c %{buildroot}
 
 %check
 make test
@@ -112,6 +113,13 @@ make test
 %{_mandir}/man3/DateTime::Types.3*
 
 %changelog
+* Mon Apr 22 2019 Paul Howarth <paul@city-fan.org> - 2:1.51-1
+- Update to 1.51
+  - Fix CLDR formatting of 'S' pattern with more than 9 digits of precision;
+    while we only store nanoseconds in the DateTime object we should still be
+    able to handle an arbitrary number of digits properly (GH#89)
+- Modernize spec using %%{make_build} and %%{make_install}
+
 * Fri Feb 01 2019 Fedora Release Engineering <releng@fedoraproject.org> - 2:1.50-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
 
