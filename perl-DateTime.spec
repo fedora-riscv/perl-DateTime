@@ -50,13 +50,12 @@ BuildRequires:  perl(XSLoader)
 # Tests:
 BuildRequires:  perl(CPAN::Meta::Check) >= 0.011
 BuildRequires:  perl(CPAN::Meta::Requirements)
-BuildRequires:  perl(ExtUtils::MakeMaker)
 BuildRequires:  perl(File::Spec)
 BuildRequires:  perl(Test::Fatal)
 BuildRequires:  perl(Test::More) >= 0.96
 BuildRequires:  perl(Test::Warnings) >= 0.005
 BuildRequires:  perl(utf8)
-%if %{with perl_DateTime_enables_optional_test}
+%if %{with perl_DateTime_enables_optional_test} && !%{defined perl_bootstrap}
 # Optional Tests:
 BuildRequires:  perl(CPAN::Meta) >= 2.120900
 BuildRequires:  perl(DateTime::Format::Strptime)
