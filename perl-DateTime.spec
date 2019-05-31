@@ -8,7 +8,7 @@
 Name:           perl-DateTime
 Epoch:          2
 Version:        1.51
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
 URL:            https://metacpan.org/release/DateTime
@@ -112,6 +112,9 @@ make test
 %{_mandir}/man3/DateTime::Types.3*
 
 %changelog
+* Fri May 31 2019 Jitka Plesnikova <jplesnik@redhat.com> - 2:1.51-2
+- Perl 5.30 rebuild
+
 * Mon Apr 22 2019 Paul Howarth <paul@city-fan.org> - 2:1.51-1
 - Update to 1.51
   - Fix CLDR formatting of 'S' pattern with more than 9 digits of precision;
