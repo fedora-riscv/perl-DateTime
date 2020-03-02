@@ -7,8 +7,8 @@
 
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.51
-Release:        5%{?dist}
+Version:        1.52
+Release:        1%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
 URL:            https://metacpan.org/release/DateTime
@@ -112,6 +112,13 @@ make test
 %{_mandir}/man3/DateTime::Types.3*
 
 %changelog
+* Mon Mar  2 2020 Paul Howarth <paul@city-fan.org> - 2:1.52-1
+- Update to 1.51
+  - Added a $dt->is_between($dt1, $dt2) method (based on GH#97)
+  - Simplify the calculation of leap seconds in XS (GH#91); this is a little
+    more efficient for most use cases (anything with future or recent past
+    datetimes)
+
 * Wed Jan 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 2:1.51-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
 
