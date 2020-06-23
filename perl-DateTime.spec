@@ -8,7 +8,7 @@
 Name:           perl-DateTime
 Epoch:          2
 Version:        1.52
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
 URL:            https://metacpan.org/release/DateTime
@@ -112,6 +112,9 @@ make test
 %{_mandir}/man3/DateTime::Types.3*
 
 %changelog
+* Tue Jun 23 2020 Jitka Plesnikova <jplesnik@redhat.com> - 2:1.52-2
+- Perl 5.32 rebuild
+
 * Mon Mar  2 2020 Paul Howarth <paul@city-fan.org> - 2:1.52-1
 - Update to 1.51
   - Added a $dt->is_between($dt1, $dt2) method (based on GH#97)
