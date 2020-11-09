@@ -7,8 +7,8 @@
 
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.52
-Release:        4%{?dist}
+Version:        1.53
+Release:        1%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
 URL:            https://metacpan.org/release/DateTime
@@ -26,7 +26,7 @@ BuildRequires:  perl(ExtUtils::MakeMaker) >= 6.76
 BuildRequires:  perl(base)
 BuildRequires:  perl(Carp)
 BuildRequires:  perl(DateTime::Locale) >= 1.06
-BuildRequires:  perl(DateTime::TimeZone) >= 2.02
+BuildRequires:  perl(DateTime::TimeZone) >= 2.44
 BuildRequires:  perl(Dist::CheckConflicts) >= 0.02
 BuildRequires:  perl(integer)
 BuildRequires:  perl(namespace::autoclean) >= 0.19
@@ -112,6 +112,10 @@ make test
 %{_mandir}/man3/DateTime::Types.3*
 
 %changelog
+* Mon Nov  9 2020 Paul Howarth <paul@city-fan.org> - 2:1.53-1
+- Update to 1.53
+  - Added a $dt->rfc3339 method, based on discussion in GH#109
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 2:1.52-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
@@ -122,7 +126,7 @@ make test
 - Perl 5.32 rebuild
 
 * Mon Mar  2 2020 Paul Howarth <paul@city-fan.org> - 2:1.52-1
-- Update to 1.51
+- Update to 1.52
   - Added a $dt->is_between($dt1, $dt2) method (based on GH#97)
   - Simplify the calculation of leap seconds in XS (GH#91); this is a little
     more efficient for most use cases (anything with future or recent past
