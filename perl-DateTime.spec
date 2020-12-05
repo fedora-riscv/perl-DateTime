@@ -7,7 +7,7 @@
 
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.53
+Version:        1.54
 Release:        1%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
@@ -112,6 +112,10 @@ make test
 %{_mandir}/man3/DateTime::Types.3*
 
 %changelog
+* Sat Dec  5 2020 Paul Howarth <paul@city-fan.org> - 2:1.54-1
+- Update to 1.54
+  - Documentation updates
+
 * Mon Nov  9 2020 Paul Howarth <paul@city-fan.org> - 2:1.53-1
 - Update to 1.53
   - Added a $dt->rfc3339 method, based on discussion in GH#109
