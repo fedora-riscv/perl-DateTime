@@ -8,7 +8,7 @@
 Name:           perl-DateTime
 Epoch:          2
 Version:        1.54
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
 URL:            https://metacpan.org/release/DateTime
@@ -112,6 +112,9 @@ make test
 %{_mandir}/man3/DateTime::Types.3*
 
 %changelog
+* Thu Jul 22 2021 Fedora Release Engineering <releng@fedoraproject.org> - 2:1.54-6
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
+
 * Mon May 24 2021 Jitka Plesnikova <jplesnik@redhat.com> - 2:1.54-5
 - Perl 5.34 re-rebuild of bootstrapped packages
 
