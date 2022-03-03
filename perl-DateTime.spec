@@ -7,7 +7,7 @@
 
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.56
+Version:        1.57
 Release:        1%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
@@ -55,6 +55,7 @@ BuildRequires:  perl(File::Spec)
 BuildRequires:  perl(Test::Fatal)
 BuildRequires:  perl(Test::More) >= 0.96
 BuildRequires:  perl(Test::Warnings) >= 0.005
+BuildRequires:  perl(Test::Without::Module)
 BuildRequires:  perl(utf8)
 %if %{with perl_DateTime_enables_optional_test} && !%{defined perl_bootstrap}
 # Optional Tests:
@@ -113,6 +114,14 @@ make test
 %{_mandir}/man3/DateTime::Types.3*
 
 %changelog
+* Thu Mar  3 2022 Paul Howarth <paul@city-fan.org> - 2:1.57-1
+- Update to 1.57
+  - The last release would die if Sub::Util was not available, but this
+    should just be an optional requirement (GH#131); this is the second
+    time I've introduced this bug, so now there's a test to make sure
+    that DateTime can be loaded if Sub::Util is not installed, which will
+    hopefully prevent a third occurrence of this bug
+
 * Thu Mar  3 2022 Paul Howarth <paul@city-fan.org> - 2:1.56-1
 - Update to 1.56
   - The DateTime->from_epoch constructor now accepts a single, non-hashref
