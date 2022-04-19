@@ -7,7 +7,7 @@
 
 Name:           perl-DateTime
 Epoch:          2
-Version:        1.57
+Version:        1.58
 Release:        1%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic 2.0
@@ -114,6 +114,11 @@ make test
 %{_mandir}/man3/DateTime::Types.3*
 
 %changelog
+* Tue Apr 19 2022 Paul Howarth <paul@city-fan.org> - 2:1.58-1
+- Update to 1.58
+  - Fixed tests so that they ignore the value set in the
+    'PERL_DATETIME_DEFAULT_TZ' env var, if one exists (GH#128)
+
 * Thu Mar  3 2022 Paul Howarth <paul@city-fan.org> - 2:1.57-1
 - Update to 1.57
   - The last release would die if Sub::Util was not available, but this
