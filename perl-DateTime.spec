@@ -1,3 +1,5 @@
+%global perl_bootstrap 1
+
 # Run optional test
 %if ! (0%{?rhel})
 %bcond_without perl_DateTime_enables_optional_test
@@ -8,7 +10,11 @@
 Name:           perl-DateTime
 Epoch:          2
 Version:        1.59
+%if 0%{?perl_bootstrap}
+Release:        1~bootstrap%{?dist}
+%else
 Release:        1%{?dist}
+%endif
 Summary:        Date and time object for Perl
 License:        Artistic-2.0
 URL:            https://metacpan.org/release/DateTime
@@ -22,6 +28,7 @@ BuildRequires:  perl-devel
 BuildRequires:  perl-generators
 BuildRequires:  perl-interpreter
 BuildRequires:  perl(ExtUtils::MakeMaker) >= 6.76
+%if ! 0%{?perl_bootstrap}
 # Run-time:
 BuildRequires:  perl(Carp)
 BuildRequires:  perl(DateTime::Locale) >= 1.06
@@ -63,6 +70,7 @@ BuildRequires:  perl(DateTime::Format::Strptime)
 BuildRequires:  perl(Storable)
 BuildRequires:  perl(Test::Warn)
 %endif
+%endif
 # Dependencies:
 Requires:       perl(:MODULE_COMPAT_%(eval "`perl -V:version`"; echo $version))
 Requires:       perl(XSLoader)
@@ -97,8 +105,10 @@ perl Makefile.PL \
 find %{buildroot} -type f -name '*.bs' -empty -delete
 %{_fixperms} -c %{buildroot}
 
+%if ! 0%{?perl_bootstrap}
 %check
 make test
+%endif
 
 %files
 %license LICENSE
@@ -113,6 +123,9 @@ make test
 %{_mandir}/man3/DateTime::Types.3*
 
 %changelog
+* Mon Dec 12 2022 Liu Yang <Yang.Liu.sn@gmail.com> - 2:1.59-1~boostrap
+- Add bootstrap switch for bootstrap for riscv64.
+
 * Mon Oct 24 2022 Paul Howarth <paul@city-fan.org> - 2:1.59-1
 - Update to 1.59
   - Fixed tests to pass with DateTime::Locale 1.37+ (GH#34)
