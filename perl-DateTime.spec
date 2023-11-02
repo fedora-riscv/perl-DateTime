@@ -1,3 +1,5 @@
+%global perl_bootstrap 1
+
 # Run optional test
 %if ! (0%{?rhel})
 %bcond_without perl_DateTime_enables_optional_test
@@ -8,7 +10,7 @@
 Name:           perl-DateTime
 Epoch:          2
 Version:        1.59
-Release:        5%{?dist}
+Release:        5~bootstrap%{?dist}
 Summary:        Date and time object for Perl
 License:        Artistic-2.0
 URL:            https://metacpan.org/release/DateTime
@@ -97,7 +99,7 @@ find %{buildroot} -type f -name '*.bs' -empty -delete
 %{_fixperms} -c %{buildroot}
 
 %check
-make test
+# make test
 
 %files
 %license LICENSE
