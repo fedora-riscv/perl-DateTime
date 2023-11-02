@@ -1,4 +1,4 @@
-%global perl_bootstrap 1
+%global perl_bootstrap 0
 
 # Run optional test
 %if ! (0%{?rhel})
