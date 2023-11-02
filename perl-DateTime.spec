@@ -1,4 +1,4 @@
-%global perl_bootstrap 0
+%global perl_bootstrap 1
 
 # Run optional test
 %if ! (0%{?rhel})
@@ -25,6 +25,7 @@ BuildRequires:  perl-generators
 BuildRequires:  perl-interpreter
 BuildRequires:  perl(ExtUtils::MakeMaker) >= 6.76
 # Run-time:
+%if ! 0%{?perl_bootstrap}
 BuildRequires:  perl(Carp)
 BuildRequires:  perl(DateTime::Locale) >= 1.06
 BuildRequires:  perl(DateTime::TimeZone) >= 2.44
@@ -64,6 +65,7 @@ BuildRequires:  perl(CPAN::Meta) >= 2.120900
 BuildRequires:  perl(DateTime::Format::Strptime)
 BuildRequires:  perl(Storable)
 BuildRequires:  perl(Test::Warn)
+%endif
 %endif
 # Dependencies:
 Requires:       perl(XSLoader)
